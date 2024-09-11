@@ -11,6 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>railway_ticketing</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>railway_ticketing</name>
     <description>railway_ticketing</description>
     <url/>
@@ -20,6 +21,10 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>member</module>
+        <module>member</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>

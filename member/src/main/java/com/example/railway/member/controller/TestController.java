@@ -1,10 +1,12 @@
-package com.example.railway_ticketing;
+package com.example.railway.member.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class TestController {
     @GetMapping("/hello")
     public String hello() {
-        return "Hello123";
+        return "Hello";
     }
 }
