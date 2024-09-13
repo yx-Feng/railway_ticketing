@@ -23,7 +23,7 @@
     </developers>
     <modules>
         <module>member</module>
-        <module>member</module>
+        <module>common</module>
     </modules>
     <scm>
         <connection/>
@@ -35,19 +35,6 @@
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.8.27</version>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>
