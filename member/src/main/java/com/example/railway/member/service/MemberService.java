@@ -7,6 +7,7 @@ import com.example.railway.member.domain.Member;
 import com.example.railway.member.domain.MemberExample;
 import com.example.railway.member.mapper.MemberMapper;
 import com.example.railway.member.req.MemberRegisterReq;
+import com.example.railway.util.SnowUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class MemberService {
         }
 
         Member member = new Member();
-        member.setId(System.currentTimeMillis());
+        member.setId(SnowUtil.getSnowflakeNextId());
         member.setMobile(mobile);
         memberMapper.insert(member);
         return member.getId();
