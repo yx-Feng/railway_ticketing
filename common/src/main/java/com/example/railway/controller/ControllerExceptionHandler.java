@@ -4,6 +4,7 @@ import com.example.railway.exception.BusinessException;
 import com.example.railway.resp.CommonResq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,17 @@ public class ControllerExceptionHandler {
         LOG.error("业务异常：", e);
         commonResq.setSuccess(false);
         commonResq.setMessage(e.getE().getDesc());
+        return commonResq;
+    }
+
+    // 校验异常统一处理
+    @ExceptionHandler(value = BindException.class)
+    @ResponseBody
+    public CommonResq exceptionHandler(BindException e) {
+        CommonResq commonResq = new CommonResq();
+        LOG.error("校验异常：", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        commonResq.setSuccess(false);
+        commonResq.setMessage(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         return commonResq;
     }
 }
