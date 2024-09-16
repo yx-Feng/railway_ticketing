@@ -1,7 +1,9 @@
 package com.example.railway.member.controller;
 
+import com.example.railway.member.req.MemberLoginReq;
 import com.example.railway.member.req.MemberRegisterReq;
 import com.example.railway.member.req.MemberSendCodeReq;
+import com.example.railway.member.resp.MemberLoginResp;
 import com.example.railway.member.service.MemberService;
 import com.example.railway.resp.CommonResq;
 import jakarta.annotation.Resource;
@@ -39,5 +41,11 @@ public class MemberController {
         memberService.sendCode(req);
         CommonResq<Long> commonResq = new CommonResq<Long>();
         return commonResq;
+    }
+
+    @PostMapping("/login")
+    public CommonResq<MemberLoginResp> login(@Valid MemberLoginReq req) {
+        MemberLoginResp resp = memberService.login(req);
+        return new CommonResq<MemberLoginResp>(resp);
     }
 }
