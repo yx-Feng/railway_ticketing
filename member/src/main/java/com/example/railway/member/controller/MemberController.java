@@ -1,6 +1,7 @@
 package com.example.railway.member.controller;
 
 import com.example.railway.member.req.MemberRegisterReq;
+import com.example.railway.member.req.MemberSendCodeReq;
 import com.example.railway.member.service.MemberService;
 import com.example.railway.resp.CommonResq;
 import jakarta.annotation.Resource;
@@ -30,6 +31,13 @@ public class MemberController {
         long register = memberService.register(req);
         CommonResq<Long> commonResq = new CommonResq<Long>();
         commonResq.setContent(register);
+        return commonResq;
+    }
+
+    @PostMapping("/send-code")
+    public CommonResq<Long> sendCode(@Valid MemberSendCodeReq req) {
+        memberService.sendCode(req);
+        CommonResq<Long> commonResq = new CommonResq<Long>();
         return commonResq;
     }
 }
