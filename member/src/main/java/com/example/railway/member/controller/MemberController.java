@@ -8,10 +8,7 @@ import com.example.railway.member.service.MemberService;
 import com.example.railway.resp.CommonResq;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/member")
@@ -37,14 +34,14 @@ public class MemberController {
     }
 
     @PostMapping("/send-code")
-    public CommonResq<Long> sendCode(@Valid MemberSendCodeReq req) {
+    public CommonResq<Long> sendCode(@Valid @RequestBody MemberSendCodeReq req) {
         memberService.sendCode(req);
         CommonResq<Long> commonResq = new CommonResq<Long>();
         return commonResq;
     }
 
     @PostMapping("/login")
-    public CommonResq<MemberLoginResp> login(@Valid MemberLoginReq req) {
+    public CommonResq<MemberLoginResp> login(@Valid @RequestBody MemberLoginReq req) {
         MemberLoginResp resp = memberService.login(req);
         return new CommonResq<MemberLoginResp>(resp);
     }
