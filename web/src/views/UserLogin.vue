@@ -27,10 +27,13 @@
 import { reactive } from 'vue';
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import {useRouter} from 'vue-router';
+
 const loginForm = reactive({
-  mobile: '8888888',
+  mobile: '11118888888',
   code: '',
 });
+const router = useRouter();
 const sendCode = () => {
   axios.post("/member/member/send-code", {
     mobile: loginForm.mobile
@@ -51,6 +54,8 @@ const login = () => {
     let data = response.data;
     if(data.success) {
       notification.success({description: '登录成功!'})
+      // 登录成功，跳转到控制台主页
+      router.push("/")
       // console.log("登录成功：",data.content);
     } else {
       notification.error({description: data.message})
