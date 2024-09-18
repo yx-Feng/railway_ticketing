@@ -13,6 +13,7 @@ import com.example.railway.member.req.MemberLoginReq;
 import com.example.railway.member.req.MemberRegisterReq;
 import com.example.railway.member.req.MemberSendCodeReq;
 import com.example.railway.member.resp.MemberLoginResp;
+import com.example.railway.util.JwtUtil;
 import com.example.railway.util.SnowUtil;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -90,6 +91,8 @@ public class MemberService {
         }
 
         MemberLoginResp memberLoginResp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+        String token = JwtUtil.createToken(memberLoginResp.getId(), memberLoginResp.getMobile());
+        memberLoginResp.setToken(token);
         return memberLoginResp;
     }
 
