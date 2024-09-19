@@ -1,4 +1,4 @@
-package com.example.railway.config;
+package com.example.railway.gateway.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
