@@ -21,8 +21,8 @@ public class JwtUtil {
 
     public static String createToken(Long id, String mobile) {
         DateTime now = DateTime.now();
-        // DateTime expTime = now.offsetNew(DateField.HOUR, 24);
-        DateTime expTime = now.offsetNew(DateField.SECOND, 24);
+        DateTime expTime = now.offsetNew(DateField.HOUR, 24);
+        // DateTime expTime = now.offsetNew(DateField.SECOND, 24);
         Map<String, Object> payload = new HashMap<>();
         // 签发时间
         payload.put(JWTPayload.ISSUED_AT, now);
@@ -38,14 +38,14 @@ public class JwtUtil {
         return token;
     }
 
-    private static boolean validate(String token) {
+    public static boolean validate(String token) {
         JWT jwt = JWTUtil.parseToken(token).setKey(key.getBytes());
         boolean validate = jwt.validate(0);
         LOG.info("JWT token校验结果：{}", validate);
         return validate;
     }
 
-    private static JSONObject getJSONObject(String token) {
+    public static JSONObject getJSONObject(String token) {
         JWT jwt = JWTUtil.parseToken(token).setKey(key.getBytes());
         JSONObject payloads = jwt.getPayloads();
         payloads.remove(JWTPayload.ISSUED_AT);
