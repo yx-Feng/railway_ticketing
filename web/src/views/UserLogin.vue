@@ -57,7 +57,7 @@ const login = () => {
     if(data.success) {
       notification.success({description: '登录成功!'})
       // 登录成功，跳转到控制台主页
-      router.push("/")
+      router.push("/welcome")
       memberStore.setMember(data.content);
       // console.log("登录成功：",data.content);
     } else {

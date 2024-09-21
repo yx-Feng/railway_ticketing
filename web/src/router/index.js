@@ -12,7 +12,18 @@ const router = createRouter({
       component: () => import('../views/HomePage.vue'),
       meta: {
         loginRequire: true
-      }
+      },
+      children: [{
+        path: 'welcome',
+        component: () => import('../views/main/Welcome.vue'),
+      },{
+        path: 'passenger',
+        component: () => import('../views/main/Passenger.vue'),
+      }]
+    },
+    {
+      path: '',
+      redirect: '/welcome'
     },
     {
       path: '/login',
