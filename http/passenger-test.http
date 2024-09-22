@@ -1,10 +1,15 @@
+GET http://localhost:8000/member/passenger/query-list?page=1&size=2
+Accept: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjY5MTc1MjIsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzAwMzkyMiwiaWF0IjoxNzI2OTE3NTIyfQ.LRjpBKgN6YPlPEsXipvBWKBMZY_CzZpOslV_ZCvgoK0
+
+###
 POST http://localhost:8000/member/passenger/save
 Content-Type: application/json
 token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjY5MTc1MjIsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzAwMzkyMiwiaWF0IjoxNzI2OTE3NTIyfQ.LRjpBKgN6YPlPEsXipvBWKBMZY_CzZpOslV_ZCvgoK0
 
 {
-  "name": "test",
-  "idCard": "1111111111",
-  "type": "1"
+  "name": "test2",
+  "idCard": "333333",
+  "type": "3"
 }
 
