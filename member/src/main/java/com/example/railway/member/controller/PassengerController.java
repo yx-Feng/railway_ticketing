@@ -30,4 +30,10 @@ public class PassengerController {
         PageResp<PassengerQueryResp> list = passengerService.queryList(req);
         return new CommonResq<>(list);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public CommonResq<Object> delete(@PathVariable Long id) {
+        passengerService.delete(id);
+        return new CommonResq<>();
+    }
 }
