@@ -1,11 +1,25 @@
+POST http://localhost:8000/member/passenger/save
+Content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjcwMDgyOTEsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzA5NDY5MSwiaWF0IjoxNzI3MDA4MjkxfQ.674FH2LFzI2xJ4hwWwJbdu8Ze4W6WTBM6Lan0-a84Ss
+
+{
+  "id": "1837733016642916352",
+  "memberId": "1835672465645375488",
+  "name": "test5",
+  "idCard": "333333",
+  "type": "3"
+}
+
+
+###
 GET http://localhost:8000/member/passenger/query-list?page=1&size=2
 Accept: application/json
-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjY5MTc1MjIsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzAwMzkyMiwiaWF0IjoxNzI2OTE3NTIyfQ.LRjpBKgN6YPlPEsXipvBWKBMZY_CzZpOslV_ZCvgoK0
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjcwMDgyOTEsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzA5NDY5MSwiaWF0IjoxNzI3MDA4MjkxfQ.674FH2LFzI2xJ4hwWwJbdu8Ze4W6WTBM6Lan0-a84Ss
 
 ###
 POST http://localhost:8000/member/passenger/save
 Content-Type: application/json
-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjY5MTc1MjIsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzAwMzkyMiwiaWF0IjoxNzI2OTE3NTIyfQ.LRjpBKgN6YPlPEsXipvBWKBMZY_CzZpOslV_ZCvgoK0
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjcwMDgyOTEsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTcyNzA5NDY5MSwiaWF0IjoxNzI3MDA4MjkxfQ.674FH2LFzI2xJ4hwWwJbdu8Ze4W6WTBM6Lan0-a84Ss
 
 {
   "name": "test2",

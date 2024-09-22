@@ -2,10 +2,18 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="showModal">新增</a-button>
+      <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="passengers" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading"/>
+  <a-table :dataSource="passengers" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
+    <template #bodyCell="{column, record}" >
+      <template v-if="column.dataIndex === 'operation'">
+        <a-space>
+          <a @click="onEdit(record)">编辑</a>
+        </a-space>
+      </template>
+    </template>
+  </a-table>
   <a-modal v-model:open="visible" title="乘车人" @ok="handleOk" ok-text="确认" cancel-text="取消">
     <a-form :model="passenger" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
       <a-form-item label="姓名">
@@ -31,7 +39,7 @@ import axios from "axios";
 import {notification} from "ant-design-vue";
 
 const visible = ref(false);
-const passenger = reactive({
+const passenger = ref({
   id: undefined,
   memberId: undefined,
   name: undefined,
@@ -40,13 +48,10 @@ const passenger = reactive({
   createTime: undefined,
   updateTime: undefined
 })
-const showModal = () => {
-  visible.value = true;
-}
 
 const passengers = ref([])
 // 分页的三个属性是固定的
-const pagination = reactive({
+const pagination = ref({
   total: 0,
   current: 1,
   pageSize: 2
@@ -68,18 +73,22 @@ const columns = [
     dataIndex: 'type',
     key: 'type',
   },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+  },
 ]
 
 // 新增乘车人
 const handleOk = (e) => {
-  axios.post("/member/passenger/save", passenger).then((response) => {
+  axios.post("/member/passenger/save", passenger.value).then((response) => {
     let data = response.data;
     if(data.success) {
       notification.success({description: "保存成功!"})
       visible.value = false;
       handleQuery({
-        page: pagination.current,
-        size: pagination.pageSize
+        page: pagination.value.current,
+        size: pagination.value.pageSize
       })
     } else {
       notification.error({description: data.message})
@@ -92,7 +101,7 @@ const handleQuery = (param) => {
   if(!param) {
     param = {
       page: 1,
-      size: pagination.pageSize
+      size: pagination.value.pageSize
     }
   }
   loading.value = true
@@ -107,8 +116,8 @@ const handleQuery = (param) => {
     if(data.success) {
       passengers.value = data.content.list;
       // 设置分页控件的值
-      pagination.current = param.page;
-      pagination.total = data.content.total;
+      pagination.value.current = param.page;
+      pagination.value.total = data.content.total;
     } else {
       notification.error({description: data.message})
     }
@@ -122,10 +131,22 @@ const handleTableChange = (pagination) => {
   })
 }
 
+// 点击增加
+const onAdd = () => {
+  passenger.value = {};
+  visible.value = true;
+}
+
+// 点击编辑
+const onEdit = (record) => {
+  passenger.value = JSON.parse(JSON.stringify(record));
+  visible.value = true
+}
+
 onMounted(() => {
   handleQuery({
     page: 1,
-    size: pagination.pageSize
+    size: pagination.value.pageSize
   })
 })
 </script>
