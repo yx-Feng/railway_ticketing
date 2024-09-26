@@ -1,10 +1,10 @@
-package com.example.railway.member.controller;
+package com.example.railway.${module}.controller;
 
 import com.example.railway.context.LoginMemberContext;
-import com.example.railway.member.req.${Domain}QueryReq;
-import com.example.railway.member.req.${Domain}SaveReq;
-import com.example.railway.member.resp.${Domain}QueryResp;
-import com.example.railway.member.service.${Domain}Service;
+import com.example.railway.${module}.req.${Domain}QueryReq;
+import com.example.railway.${module}.req.${Domain}SaveReq;
+import com.example.railway.${module}.resp.${Domain}QueryResp;
+import com.example.railway.${module}.service.${Domain}Service;
 import com.example.railway.resp.CommonResq;
 import com.example.railway.resp.PageResp;
 import jakarta.annotation.Resource;
@@ -26,7 +26,7 @@ public class ${Domain}Controller {
 
     @GetMapping("/query-list")
     public CommonResq<PageResp<${Domain}QueryResp>> queryList(@Valid ${Domain}QueryReq req) {
-        req.setMemberId(LoginMemberContext.getId()); // 直接拿到memberId
+        req.setMemberId(LoginMemberContext.getId()); // 直接拿到${module}Id
         PageResp<${Domain}QueryResp> list = ${domain}Service.queryList(req);
         return new CommonResq<>(list);
     }

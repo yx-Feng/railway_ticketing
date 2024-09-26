@@ -92,6 +92,7 @@ public class ServerGenerator {
 
         // 组装参数
         Map<String, Object> param = new HashMap<>();
+        param.put("module", module);
         param.put("Domain", Domain);
         param.put("domain", domain);
         param.put("do_main", do_main);
@@ -102,7 +103,8 @@ public class ServerGenerator {
 
 //        gen(Domain, param, "service", "service");
 //        gen(Domain, param, "controller", "controller");
-        gen(Domain, param, "Req", "saveReq");
+        gen(Domain, param, "req", "queryReq");
+        gen(Domain, param, "resp", "queryResp");
 
     }
 }

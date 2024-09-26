@@ -1,15 +1,15 @@
-package com.example.railway.member.service;
+package com.example.railway.${module}.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.railway.context.LoginMemberContext;
-import com.example.railway.member.domain.${Domain};
-import com.example.railway.member.domain.${Domain}Example;
-import com.example.railway.member.mapper.${Domain}Mapper;
-import com.example.railway.member.req.${Domain}QueryReq;
-import com.example.railway.member.req.${Domain}SaveReq;
-import com.example.railway.member.resp.${Domain}QueryResp;
+import com.example.railway.${module}.domain.${Domain};
+import com.example.railway.${module}.domain.${Domain}Example;
+import com.example.railway.${module}.mapper.${Domain}Mapper;
+import com.example.railway.${module}.req.${Domain}QueryReq;
+import com.example.railway.${module}.req.${Domain}SaveReq;
+import com.example.railway.${module}.resp.${Domain}QueryResp;
 import com.example.railway.resp.PageResp;
 import com.example.railway.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
