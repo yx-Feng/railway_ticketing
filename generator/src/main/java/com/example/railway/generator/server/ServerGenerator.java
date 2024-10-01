@@ -39,7 +39,7 @@ public class ServerGenerator {
         String toPath = serverPath + packageName + "/";
         new File(serverPath).mkdir();
         String Target = target.substring(0,1).toUpperCase() + target.substring(1);
-        String fileName = toPath + Domain + Target + "1.java";
+        String fileName = toPath + Domain + Target + ".java";
         System.out.println("开始生成：" + fileName);
         FreemarkerUtil.generator(fileName, param); // 生成
     }
@@ -101,10 +101,10 @@ public class ServerGenerator {
         param.put("typeSet", typeSet);
         System.out.println("组装参数：" + param);
 
-//        gen(Domain, param, "service", "service");
-//        gen(Domain, param, "controller", "controller");
+        gen(Domain, param, "service", "service");
+        gen(Domain, param, "controller", "controller");
+        gen(Domain, param, "req", "saveReq");
         gen(Domain, param, "req", "queryReq");
         gen(Domain, param, "resp", "queryResp");
-
     }
 }
