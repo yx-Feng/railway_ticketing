@@ -23,19 +23,20 @@
         <a-input v-model:value="station.name" />
       </a-form-item>
       <a-form-item label="站名拼音">
-        <a-input v-model:value="station.namePinyin" />
+        <a-input v-model:value="station.namePinyin" disabled/>
       </a-form-item>
-      <a-form-item label="站名拼音首字母">
-        <a-input v-model:value="station.namePy" />
+      <a-form-item label="拼音首字母">
+        <a-input v-model:value="station.namePy" disabled/>
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import {pinyin} from "pinyin-pro";
 
 const visible = ref(false);
 const station = ref({
@@ -139,6 +140,17 @@ const handleTableChange = (pagination) => {
     size: pagination.pageSize
   })
 }
+
+// 汉字转拼音，自动填入
+watch(() => station.value.name, () => {
+  if(station.value.name) {
+    station.value.namePinyin = pinyin(station.value.name, {toneType: 'none'}).replaceAll(" ", "");
+    station.value.namePy= pinyin(station.value.name, {pattern: 'first', toneType: 'none'}).replaceAll(" ", "");
+  } else {
+    station.value.namePinyin = "";
+    station.value.namePy = "";
+  }
+}, {immediate: true})
 
 // 点击增加
 const onAdd = () => {

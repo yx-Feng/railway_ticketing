@@ -36,7 +36,7 @@
         <a-input v-model:value="train.start" />
       </a-form-item>
       <a-form-item label="始发站拼音">
-        <a-input v-model:value="train.startPinyin" />
+        <a-input v-model:value="train.startPinyin" disabled/>
       </a-form-item>
       <a-form-item label="出发时间">
         <a-time-picker v-model:value="train.startTime" value-format="HH:mm:ss" placeholder="请选择时间"/>
@@ -45,7 +45,7 @@
         <a-input v-model:value="train.end" />
       </a-form-item>
       <a-form-item label="终点站拼音">
-        <a-input v-model:value="train.endPinyin" />
+        <a-input v-model:value="train.endPinyin" disabled/>
       </a-form-item>
       <a-form-item label="到站时间">
         <a-time-picker v-model:value="train.endTime" value-format="HH:mm:ss" placeholder="请选择时间"/>
@@ -55,9 +55,10 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import {pinyin} from "pinyin-pro";
 
 const visible = ref(false);
 const train = ref({
@@ -192,6 +193,22 @@ const handleTableChange = (pagination) => {
     size: pagination.pageSize
   })
 }
+
+// 汉字转拼音，自动填入
+watch(() => train.value.start, () => {
+  if(train.value.start) {
+    train.value.startPinyin = pinyin(train.value.start, {toneType: 'none'}).replaceAll(" ", "");
+  } else {
+    train.value.startPinyin = "";
+  }
+}, {immediate: true})
+watch(() => train.value.end, () => {
+  if(train.value.end) {
+    train.value.endPinyin = pinyin(train.value.end, {toneType: 'none'}).replaceAll(" ", "");
+  } else {
+    train.value.endPinyin = "";
+  }
+}, {immediate: true})
 
 // 点击增加
 const onAdd = () => {

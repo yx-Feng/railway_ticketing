@@ -29,7 +29,7 @@
         <a-input v-model:value="trainStation.name" />
       </a-form-item>
       <a-form-item label="站名拼音">
-        <a-input v-model:value="trainStation.namePinyin" />
+        <a-input v-model:value="trainStation.namePinyin" disabled/>
       </a-form-item>
       <a-form-item label="进站时间">
         <a-time-picker v-model:value="trainStation.inTime" value-format="HH:mm:ss" placeholder="请选择时间"/>
@@ -48,9 +48,10 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import {pinyin} from "pinyin-pro";
 
 const visible = ref(false);
 const trainStation = ref({
@@ -184,6 +185,15 @@ const handleTableChange = (pagination) => {
     size: pagination.pageSize
   })
 }
+
+// 汉字转拼音，自动填入
+watch(() => trainStation.value.name, () => {
+  if(trainStation.value.name) {
+    trainStation.value.namePinyin = pinyin(trainStation.value.name, {toneType: 'none'}).replaceAll(" ", "");
+  } else {
+    trainStation.value.namePinyin = "";
+  }
+}, {immediate: true})
 
 // 点击增加
 const onAdd = () => {
