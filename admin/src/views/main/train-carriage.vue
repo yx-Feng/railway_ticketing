@@ -72,7 +72,7 @@ const trainCarriages = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 2
+  pageSize: 4
 })
 const loading = ref(false)
 const columns = [

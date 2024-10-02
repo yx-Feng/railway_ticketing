@@ -1,21 +1,26 @@
 package com.example.railway.business.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class trainCarriage {
+public class TrainStation {
     private Long id;
 
     private String trainCode;
 
     private Integer index;
 
-    private String seatType;
+    private String name;
 
-    private Integer seatCount;
+    private String namePinyin;
 
-    private Integer rowCount;
+    private Date inTime;
 
-    private Integer columnCount;
+    private Date outTime;
+
+    private Date stopTime;
+
+    private BigDecimal km;
 
     private Date createTime;
 
@@ -45,36 +50,52 @@ public class trainCarriage {
         this.index = index;
     }
 
-    public String getSeatType() {
-        return seatType;
+    public String getName() {
+        return name;
     }
 
-    public void setSeatType(String seatType) {
-        this.seatType = seatType;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getSeatCount() {
-        return seatCount;
+    public String getNamePinyin() {
+        return namePinyin;
     }
 
-    public void setSeatCount(Integer seatCount) {
-        this.seatCount = seatCount;
+    public void setNamePinyin(String namePinyin) {
+        this.namePinyin = namePinyin;
     }
 
-    public Integer getRowCount() {
-        return rowCount;
+    public Date getInTime() {
+        return inTime;
     }
 
-    public void setRowCount(Integer rowCount) {
-        this.rowCount = rowCount;
+    public void setInTime(Date inTime) {
+        this.inTime = inTime;
     }
 
-    public Integer getColumnCount() {
-        return columnCount;
+    public Date getOutTime() {
+        return outTime;
     }
 
-    public void setColumnCount(Integer columnCount) {
-        this.columnCount = columnCount;
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+
+    public Date getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(Date stopTime) {
+        this.stopTime = stopTime;
+    }
+
+    public BigDecimal getKm() {
+        return km;
+    }
+
+    public void setKm(BigDecimal km) {
+        this.km = km;
     }
 
     public Date getCreateTime() {
@@ -102,10 +123,12 @@ public class trainCarriage {
         sb.append(", id=").append(id);
         sb.append(", trainCode=").append(trainCode);
         sb.append(", index=").append(index);
-        sb.append(", seatType=").append(seatType);
-        sb.append(", seatCount=").append(seatCount);
-        sb.append(", rowCount=").append(rowCount);
-        sb.append(", columnCount=").append(columnCount);
+        sb.append(", name=").append(name);
+        sb.append(", namePinyin=").append(namePinyin);
+        sb.append(", inTime=").append(inTime);
+        sb.append(", outTime=").append(outTime);
+        sb.append(", stopTime=").append(stopTime);
+        sb.append(", km=").append(km);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

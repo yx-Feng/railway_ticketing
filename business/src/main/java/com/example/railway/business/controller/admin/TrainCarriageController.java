@@ -1,10 +1,9 @@
 package com.example.railway.business.controller.admin;
 
-import com.example.railway.context.LoginMemberContext;
-import com.example.railway.business.req.trainCarriageQueryReq;
-import com.example.railway.business.req.trainCarriageSaveReq;
-import com.example.railway.business.resp.trainCarriageQueryResp;
-import com.example.railway.business.service.trainCarriageService;
+import com.example.railway.business.req.TrainCarriageQueryReq;
+import com.example.railway.business.req.TrainCarriageSaveReq;
+import com.example.railway.business.resp.TrainCarriageQueryResp;
+import com.example.railway.business.service.TrainCarriageService;
 import com.example.railway.resp.CommonResq;
 import com.example.railway.resp.PageResp;
 import jakarta.annotation.Resource;
@@ -13,20 +12,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/train-carriage")
-public class trainCarriageController {
+public class TrainCarriageController {
 
     @Resource
-    private trainCarriageService trainCarriageService;
+    private TrainCarriageService trainCarriageService;
 
     @PostMapping("/save")
-    public CommonResq<Object> save(@Valid @RequestBody trainCarriageSaveReq req) {
+    public CommonResq<Object> save(@Valid @RequestBody TrainCarriageSaveReq req) {
         trainCarriageService.save(req);
         return new CommonResq<>();
     }
 
     @GetMapping("/query-list")
-    public CommonResq<PageResp<trainCarriageQueryResp>> queryList(@Valid trainCarriageQueryReq req) {
-        PageResp<trainCarriageQueryResp> list = trainCarriageService.queryList(req);
+    public CommonResq<PageResp<TrainCarriageQueryResp>> queryList(@Valid TrainCarriageQueryReq req) {
+        PageResp<TrainCarriageQueryResp> list = trainCarriageService.queryList(req);
         return new CommonResq<>(list);
     }
 

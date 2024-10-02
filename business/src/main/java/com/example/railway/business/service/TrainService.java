@@ -3,7 +3,6 @@ package com.example.railway.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import com.example.railway.context.LoginMemberContext;
 import com.example.railway.business.domain.Train;
 import com.example.railway.business.domain.TrainExample;
 import com.example.railway.business.mapper.TrainMapper;

@@ -2,7 +2,7 @@ package com.example.railway.business.req;
 
 import com.example.railway.req.PageReq;
 
-public class trainSeatQueryReq extends PageReq {
+public class TrainSeatQueryReq extends PageReq {
 
     @Override
     public String toString() {

@@ -2,11 +2,10 @@ package com.example.railway.business.req;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class trainStationSaveReq {
+public class TrainCarriageSaveReq {
 
     /**
      * id
@@ -20,46 +19,34 @@ public class trainStationSaveReq {
     private String trainCode;
 
     /**
-     * 站序
+     * 箱号
      */
-    @NotNull(message ="【站序】不能为空")
+    @NotNull(message ="【箱号】不能为空")
     private Integer index;
 
     /**
-     * 站名
+     * 座位类型|枚举[SeatTypeEnum]
      */
-    @NotBlank(message="【站名】不能为空")
-    private String name;
+    @NotBlank(message="【座位类型】不能为空")
+    private String seatType;
 
     /**
-     * 站名拼音
+     * 座位数
      */
-    @NotBlank(message="【站名拼音】不能为空")
-    private String namePinyin;
+    @NotNull(message ="【座位数】不能为空")
+    private Integer seatCount;
 
     /**
-     * 进站时间
+     * 排数
      */
-    @JsonFormat(pattern = "HH:mm:ss",timezone="GMT+8")
-    private Date inTime;
+    @NotNull(message ="【排数】不能为空")
+    private Integer rowCount;
 
     /**
-     * 出站时间
+     * 列数
      */
-    @JsonFormat(pattern = "HH:mm:ss",timezone="GMT+8")
-    private Date outTime;
-
-    /**
-     * 停站时长
-     */
-    @JsonFormat(pattern = "HH:mm:ss",timezone="GMT+8")
-    private Date stopTime;
-
-    /**
-     * 里程(公里)|从上一站到本站的距离
-     */
-    @NotNull(message ="【里程(公里)】不能为空")
-    private BigDecimal km;
+    @NotNull(message ="【列数】不能为空")
+    private Integer columnCount;
 
     /**
      * 新增时间
@@ -97,52 +84,36 @@ public class trainStationSaveReq {
         this.index = index;
     }
 
-    public String getName() {
-        return name;
+    public String getSeatType() {
+        return seatType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSeatType(String seatType) {
+        this.seatType = seatType;
     }
 
-    public String getNamePinyin() {
-        return namePinyin;
+    public Integer getSeatCount() {
+        return seatCount;
     }
 
-    public void setNamePinyin(String namePinyin) {
-        this.namePinyin = namePinyin;
+    public void setSeatCount(Integer seatCount) {
+        this.seatCount = seatCount;
     }
 
-    public Date getInTime() {
-        return inTime;
+    public Integer getRowCount() {
+        return rowCount;
     }
 
-    public void setInTime(Date inTime) {
-        this.inTime = inTime;
+    public void setRowCount(Integer rowCount) {
+        this.rowCount = rowCount;
     }
 
-    public Date getOutTime() {
-        return outTime;
+    public Integer getColumnCount() {
+        return columnCount;
     }
 
-    public void setOutTime(Date outTime) {
-        this.outTime = outTime;
-    }
-
-    public Date getStopTime() {
-        return stopTime;
-    }
-
-    public void setStopTime(Date stopTime) {
-        this.stopTime = stopTime;
-    }
-
-    public BigDecimal getKm() {
-        return km;
-    }
-
-    public void setKm(BigDecimal km) {
-        this.km = km;
+    public void setColumnCount(Integer columnCount) {
+        this.columnCount = columnCount;
     }
 
     public Date getCreateTime() {
@@ -170,12 +141,10 @@ public class trainStationSaveReq {
         sb.append(",id=").append(id);
         sb.append(",trainCode=").append(trainCode);
         sb.append(",index=").append(index);
-        sb.append(",name=").append(name);
-        sb.append(",namePinyin=").append(namePinyin);
-        sb.append(",inTime=").append(inTime);
-        sb.append(",outTime=").append(outTime);
-        sb.append(",stopTime=").append(stopTime);
-        sb.append(",km=").append(km);
+        sb.append(",seatType=").append(seatType);
+        sb.append(",seatCount=").append(seatCount);
+        sb.append(",rowCount=").append(rowCount);
+        sb.append(",columnCount=").append(columnCount);
         sb.append(",createTime=").append(createTime);
         sb.append(",updateTime=").append(updateTime);
         sb.append("]");

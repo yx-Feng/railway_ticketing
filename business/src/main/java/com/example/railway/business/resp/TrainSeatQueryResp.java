@@ -2,12 +2,10 @@ package com.example.railway.business.resp;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class trainStationQueryResp {
+public class TrainSeatQueryResp {
 
     /**
      * id
@@ -21,42 +19,29 @@ public class trainStationQueryResp {
     private String trainCode;
 
     /**
-     * 站序
+     * 箱序
      */
-    private Integer index;
+    private Integer carriageIndex;
 
     /**
-     * 站名
+     * 排号|01，02
      */
-    private String name;
+    private String row;
 
     /**
-     * 站名拼音
+     * 列号|枚举[SeatColEnum]
      */
-    private String namePinyin;
+    private String col;
 
     /**
-     * 进站时间
+     * 座位类型|枚举[SeatTypeEnum]
      */
-    @JsonFormat(pattern="HH:mm:ss",timezone ="GMT+8")
-    private Date inTime;
+    private String seatType;
 
     /**
-     * 出站时间
+     * 同车箱座序
      */
-    @JsonFormat(pattern="HH:mm:ss",timezone ="GMT+8")
-    private Date outTime;
-
-    /**
-     * 停站时长
-     */
-    @JsonFormat(pattern="HH:mm:ss",timezone ="GMT+8")
-    private Date stopTime;
-
-    /**
-     * 里程(公里)|从上一站到本站的距离
-     */
-    private BigDecimal km;
+    private Integer carriageSeatIndex;
 
     /**
      * 新增时间
@@ -86,60 +71,44 @@ public class trainStationQueryResp {
         this.trainCode = trainCode;
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getCarriageIndex() {
+        return carriageIndex;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setCarriageIndex(Integer carriageIndex) {
+        this.carriageIndex = carriageIndex;
     }
 
-    public String getName() {
-        return name;
+    public String getRow() {
+        return row;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRow(String row) {
+        this.row = row;
     }
 
-    public String getNamePinyin() {
-        return namePinyin;
+    public String getCol() {
+        return col;
     }
 
-    public void setNamePinyin(String namePinyin) {
-        this.namePinyin = namePinyin;
+    public void setCol(String col) {
+        this.col = col;
     }
 
-    public Date getInTime() {
-        return inTime;
+    public String getSeatType() {
+        return seatType;
     }
 
-    public void setInTime(Date inTime) {
-        this.inTime = inTime;
+    public void setSeatType(String seatType) {
+        this.seatType = seatType;
     }
 
-    public Date getOutTime() {
-        return outTime;
+    public Integer getCarriageSeatIndex() {
+        return carriageSeatIndex;
     }
 
-    public void setOutTime(Date outTime) {
-        this.outTime = outTime;
-    }
-
-    public Date getStopTime() {
-        return stopTime;
-    }
-
-    public void setStopTime(Date stopTime) {
-        this.stopTime = stopTime;
-    }
-
-    public BigDecimal getKm() {
-        return km;
-    }
-
-    public void setKm(BigDecimal km) {
-        this.km = km;
+    public void setCarriageSeatIndex(Integer carriageSeatIndex) {
+        this.carriageSeatIndex = carriageSeatIndex;
     }
 
     public Date getCreateTime() {
@@ -166,13 +135,11 @@ public class trainStationQueryResp {
         sb.append("Hash= ").append(hashCode());
         sb.append(",id=").append(id);
         sb.append(",trainCode=").append(trainCode);
-        sb.append(",index=").append(index);
-        sb.append(",name=").append(name);
-        sb.append(",namePinyin=").append(namePinyin);
-        sb.append(",inTime=").append(inTime);
-        sb.append(",outTime=").append(outTime);
-        sb.append(",stopTime=").append(stopTime);
-        sb.append(",km=").append(km);
+        sb.append(",carriageIndex=").append(carriageIndex);
+        sb.append(",row=").append(row);
+        sb.append(",col=").append(col);
+        sb.append(",seatType=").append(seatType);
+        sb.append(",carriageSeatIndex=").append(carriageSeatIndex);
         sb.append(",createTime=").append(createTime);
         sb.append(",updateTime=").append(updateTime);
         sb.append("]");

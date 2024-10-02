@@ -1,5 +1,6 @@
 package com.example.railway.business.controller.admin;
 
+import com.example.railway.business.service.TrainSeatService;
 import com.example.railway.context.LoginMemberContext;
 import com.example.railway.business.req.TrainQueryReq;
 import com.example.railway.business.req.TrainSaveReq;
@@ -19,6 +20,9 @@ public class TrainController {
 
     @Resource
     private TrainService trainService;
+
+    @Resource
+    private TrainSeatService trainSeatService;
 
     @PostMapping("/save")
     public CommonResq<Object> save(@Valid @RequestBody TrainSaveReq req) {
@@ -42,5 +46,11 @@ public class TrainController {
     public CommonResq<List<TrainQueryResp>> queryList() {
         List<TrainQueryResp> list = trainService.queryAll();
         return new CommonResq<>(list);
+    }
+
+    @GetMapping("/gen-seat/{trainCode}")
+    public CommonResq<Object> genSeat(@PathVariable String trainCode) {
+        trainSeatService.genTrainSeat(trainCode);
+        return new CommonResq<>();
     }
 }
