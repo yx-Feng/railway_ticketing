@@ -25,7 +25,7 @@
   <a-modal v-model:open="visible" title="车站" @ok="handleOk" ok-text="确认" cancel-text="取消">
     <a-form :model="trainSeat" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
       <a-form-item label="车次编号">
-        <a-input v-model:value="trainSeat.trainCode" />
+        <train-select v-model="trainSeat.trainCode"></train-select>
       </a-form-item>
       <a-form-item label="箱序">
         <a-input v-model:value="trainSeat.carriageIndex" />
@@ -56,6 +56,7 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import TrainSelect from "@/components/train-select.vue";
 
 const visible = ref(false);
 const trainSeat = ref({
