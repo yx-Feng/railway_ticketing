@@ -33,6 +33,7 @@
         <!-- mapper类的位置 -->
         <javaClientGenerator targetPackage="com.example.railway.business.mapper" targetProject="..\business\src\main\java" type="XMLMAPPER" />
 
-        <table tableName="station" domainObjectName="Station"/>
+<!--        <table tableName="station" domainObjectName="Station"/>-->
+        <table tableName="train" domainObjectName="Train"/>
     </context>
 </generatorConfiguration>
