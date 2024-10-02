@@ -44,7 +44,7 @@ public class ${Domain}QueryResp {
 
     </#list>
     @Override
-    public string toString() {
+    public String toString() {
         StringBuilder sb =new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");

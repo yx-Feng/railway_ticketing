@@ -5,7 +5,7 @@
       <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="trainCarriages" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
+  <a-table :dataSource="trainSeats" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
     <template #bodyCell="{column, record}" >
       <template v-if="column.dataIndex === 'operation'">
         <a-space>
@@ -23,26 +23,30 @@
     </template>
   </a-table>
   <a-modal v-model:open="visible" title="车站" @ok="handleOk" ok-text="确认" cancel-text="取消">
-    <a-form :model="trainCarriage" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
+    <a-form :model="trainSeat" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
       <a-form-item label="车次编号">
-        <a-input v-model:value="trainCarriage.trainCode" />
+        <a-input v-model:value="trainSeat.trainCode" />
       </a-form-item>
-      <a-form-item label="箱号">
-        <a-input v-model:value="trainCarriage.index" />
+      <a-form-item label="箱序">
+        <a-input v-model:value="trainSeat.carriageIndex" />
+      </a-form-item>
+      <a-form-item label="排号">
+        <a-select v-model:value="trainSeat.row">
+          <a-select-option v-for="item in TRAIN_SEAT_COL_ARRAY" :key="item.key" :value="item.key">{{item.value}}</a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item label="列号">
+        <a-select v-model:value="trainSeat.col">
+          <a-select-option v-for="item in TRAIN_SEAT_COL_ARRAY" :key="item.key" :value="item.key">{{item.value}}</a-select-option>
+        </a-select>
       </a-form-item>
       <a-form-item label="座位类型">
-        <a-select v-model:value="trainCarriage.seatType">
+        <a-select v-model:value="trainSeat.seatType">
           <a-select-option v-for="item in TRAIN_CARRIAGE_TYPE_ARRAY" :key="item.key" :value="item.key">{{item.value}}</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="座位数">
-        <a-input v-model:value="trainCarriage.seatCount" />
-      </a-form-item>
-      <a-form-item label="排数">
-        <a-input v-model:value="trainCarriage.rowCount" />
-      </a-form-item>
-      <a-form-item label="列数">
-        <a-input v-model:value="trainCarriage.columnCount" />
+      <a-form-item label="同车箱座序">
+        <a-input v-model:value="trainSeat.carriageSeatIndex" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -54,19 +58,19 @@ import axios from "axios";
 import {notification} from "ant-design-vue";
 
 const visible = ref(false);
-const trainCarriage = ref({
+const trainSeat = ref({
   id: undefined,
   trainCode: undefined,
-  index: undefined,
+  carriageIndex: undefined,
+  row: undefined,
+  col: undefined,
   seatType: undefined,
-  seatCount: undefined,
-  rowCount: undefined,
-  columnCount: undefined,
+  carriageSeatIndex: undefined,
   createTime: undefined,
   updateTime: undefined
 })
 
-const trainCarriages = ref([])
+const trainSeats = ref([])
 // 分页的三个属性是固定的
 const pagination = ref({
   total: 0,
@@ -81,9 +85,19 @@ const columns = [
     key: 'trainCode',
   },
   {
-    title: '箱号',
-    dataIndex: 'index',
-    key: 'index',
+    title: '箱序',
+    dataIndex: 'carriageIndex',
+    key: 'carriageIndex',
+  },
+  {
+    title: '排号',
+    dataIndex: 'row',
+    key: 'row',
+  },
+  {
+    title: '列号',
+    dataIndex: 'col',
+    key: 'col',
   },
   {
     title: '座位类型',
@@ -91,19 +105,9 @@ const columns = [
     key: 'seatType',
   },
   {
-    title: '座位数',
-    dataIndex: 'seatCount',
-    key: 'seatCount',
-  },
-  {
-    title: '排数',
-    dataIndex: 'rowCount',
-    key: 'rowCount',
-  },
-  {
-    title: '列数',
-    dataIndex: 'columnCount',
-    key: 'columnCount',
+    title: '同车箱座序',
+    dataIndex: 'carriageSeatIndex',
+    key: 'carriageSeatIndex',
   },
   {
     title: '新增时间',
@@ -121,11 +125,12 @@ const columns = [
   },
 ]
 const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"}, {key: "3", value: "软卧"}, {key: "4", value: "硬卧"}]
+const TRAIN_SEAT_COL_ARRAY = [{key: "A", value: "A"}, {key: "C", value: "C"}, {key: "D", value: "D"}, {key: "F", value: "F"}]
 
-// 新增车箱
+// 新增座位
 const handleOk = (e) => {
-  console.log(trainCarriage.value)
-  axios.post("/business/admin/train-carriage/save", trainCarriage.value).then((response) => {
+  console.log(trainSeat.value)
+  axios.post("/business/admin/train-seat/save", trainSeat.value).then((response) => {
     let data = response.data;
     if(data.success) {
       notification.success({description: "保存成功!"})
@@ -140,7 +145,7 @@ const handleOk = (e) => {
   })
 }
 
-// 查询车箱列表
+// 查询座位列表
 const handleQuery = (param) => {
   if(!param) {
     param = {
@@ -149,7 +154,7 @@ const handleQuery = (param) => {
     }
   }
   loading.value = true
-  axios.get("/business/admin/train-carriage/query-list", {
+  axios.get("/business/admin/train-seat/query-list", {
     params: {
       page: param.page,
       size: param.size
@@ -158,7 +163,7 @@ const handleQuery = (param) => {
     loading.value = false
     let data = response.data;
     if(data.success) {
-      trainCarriages.value = data.content.list;
+      trainSeats.value = data.content.list;
       // 设置分页控件的值
       pagination.value.current = param.page;
       pagination.value.total = data.content.total;
@@ -177,19 +182,19 @@ const handleTableChange = (pagination) => {
 
 // 点击增加
 const onAdd = () => {
-  trainCarriage.value = {};
+  trainSeat.value = {};
   visible.value = true;
 }
 
 // 点击编辑
 const onEdit = (record) => {
-  trainCarriage.value = JSON.parse(JSON.stringify(record));
+  trainSeat.value = JSON.parse(JSON.stringify(record));
   visible.value = true
 }
 
 // 删除
 const onDelete = (record) => {
-  axios.delete("/business/admin/train-carriage/delete/" + record.id).then((response) => {
+  axios.delete("/business/admin/train-seat/delete/" + record.id).then((response) => {
     const data = response.data;
     if(data.success) {
       notification.success({description: "删除成功!"});

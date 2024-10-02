@@ -32,6 +32,11 @@
             <UserOutlined /> 火车车箱管理
           </router-link>
         </a-menu-item>
+        <a-menu-item key="/train-seat">
+          <router-link to="/train-seat">
+            <UserOutlined /> 火车座位管理
+          </router-link>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
   </div>
