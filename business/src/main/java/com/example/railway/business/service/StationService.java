@@ -3,7 +3,9 @@ package com.example.railway.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import com.example.railway.context.LoginMemberContext;
+import com.example.railway.business.domain.Train;
+import com.example.railway.business.domain.TrainExample;
+import com.example.railway.business.resp.TrainQueryResp;
 import com.example.railway.business.domain.Station;
 import com.example.railway.business.domain.StationExample;
 import com.example.railway.business.mapper.StationMapper;
@@ -69,5 +71,12 @@ public class StationService {
 
     public void delete(Long id) {
         stationMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<StationQueryResp> queryAll() {
+        StationExample stationExample = new StationExample();
+        stationExample.setOrderByClause("name_pinyin asc");
+        List<Station> stationList = stationMapper.selectByExample(stationExample);
+        return BeanUtil.copyToList(stationList, StationQueryResp.class);
     }
 }
