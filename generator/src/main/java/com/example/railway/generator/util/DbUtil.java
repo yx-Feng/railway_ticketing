@@ -104,7 +104,7 @@ public class DbUtil {
 
     // 下划线转小驼峰 member_id转成memberId
     public static String lineToHump(String str) {
-        Pattern linePattern = Pattern.compile("_(\\w)}"); // 用于匹配下划线后紧跟的第一个字符
+        Pattern linePattern = Pattern.compile("_(\\w)"); // 用于匹配下划线后紧跟的第一个字符
         str = str.toLowerCase();
         Matcher matcher = linePattern.matcher(str);
         StringBuffer sb = new StringBuffer();
