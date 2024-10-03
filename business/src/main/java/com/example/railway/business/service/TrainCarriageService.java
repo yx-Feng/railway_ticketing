@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.railway.business.domain.TrainCarriage;
 import com.example.railway.business.domain.TrainCarriageExample;
+import com.example.railway.business.enums.SeatColEnum;
 import com.example.railway.business.mapper.TrainCarriageMapper;
 import com.example.railway.business.req.TrainCarriageQueryReq;
 import com.example.railway.business.req.TrainCarriageSaveReq;
@@ -30,6 +31,12 @@ public class TrainCarriageService {
     // 新增乘车人
     public void save(TrainCarriageSaveReq req) {
         DateTime now = DateTime.now();
+
+        // 自动计算出列数和总座位数
+        List<SeatColEnum> seatColEnums = SeatColEnum.getColsByType(req.getSeatType());
+        req.setColumnCount(seatColEnums.size());
+        req.setSeatCount(req.getColumnCount()*req.getRowCount());
+
         TrainCarriage trainCarriage = BeanUtil.copyProperties(req, TrainCarriage.class);
         // id为空，表示新增操作，不为空，表示更新操作
         if(ObjectUtil.isNull(trainCarriage.getId())) {

@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model:value="name" show-search :filter-option="filterNameOption" @change="onchange" placeholder="请选择车站" :style="'width:'+_width">
+  <a-select v-model:value="name" show-search :filter-option="filterNameOption" @change="onchange" placeholder="请选择车站" :style="'width:'+locaWidth">
     <a-select-option v-for="item in stations" :key="item.name" :value="item.name" :label="item.name+item.namePinyin+item.namePy">
       {{item.name}} | {{item.namePinyin}} ~ {{item.namePy}}
     </a-select-option>
@@ -15,9 +15,9 @@ const props = defineProps({
   modelValue: String,
   width: String
 });
-const _width = ref(props.width) // 接受父组件传过来的下拉框宽度
-if(!_width) {
-  _width.value = "100%"
+const locaWidth = ref(props.width) // 接受父组件传过来的下拉框宽度
+if(!locaWidth) {
+  locaWidth.value = "100%"
 }
 
 // 使用watch动态获取父组件的值，如果放在onMounted或其它方法里，只有第一次有效

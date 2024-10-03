@@ -1,19 +1,16 @@
 <template>
   <p>
     <a-space>
-      <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">新增</a-button>
+      <train-select v-model="params.trainCode"></train-select>
+      <a-button type="primary" @click="handleQuery()">查找</a-button>
     </a-space>
   </p>
   <a-table :dataSource="trainSeats" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
     <template #bodyCell="{column, record}" >
-      <template v-if="column.dataIndex === 'operation'">
-        <a-space>
-          <a-popconfirm title="删除后不可恢复，确认删除?" @confirm="onDelete(record)" ok-text="确认" cancel-text="取消">
-            <a style="color: red">删除</a>
-          </a-popconfirm>
-          <a @click="onEdit(record)">编辑</a>
-        </a-space>
+      <template v-if="column.dataIndex === 'col'">
+        <span v-for="item in TRAIN_SEAT_COL_ARRAY" :key="item.code">
+          <span v-if="item.code === record.col && item.type === record.seatType ">{{item.desc}}</span>
+        </span>
       </template>
       <template v-else-if="column.dataIndex === 'seatType'">
         <span v-for="item in TRAIN_CARRIAGE_TYPE_ARRAY" :key="item.key">
@@ -78,7 +75,10 @@ const pagination = ref({
   current: 1,
   pageSize: 8
 })
-const loading = ref(false)
+let loading = ref(false)
+let params = ref({
+  trainCode:null
+})
 const columns = [
   {
     title: '车次编号',
@@ -119,14 +119,14 @@ const columns = [
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
-  },
-  {
-    title: '操作',
-    dataIndex: 'operation',
-  },
+  }
 ]
-const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"}, {key: "3", value: "软卧"}, {key: "4", value: "硬卧"}]
-const TRAIN_SEAT_COL_ARRAY = [{key: "A", value: "A"}, {key: "C", value: "C"}, {key: "D", value: "D"}, {key: "F", value: "F"}]
+const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"},
+                                   {key: "3", value: "软卧"}, {key: "4", value: "硬卧"}]
+const TRAIN_SEAT_COL_ARRAY = [{code: "A", desc: "A", type:"1"}, {code: "C", desc: "C", type:"1"},
+                              {code: "D", desc: "D", type:"1"}, {code: "F", desc: "F", type:"1"},
+                              {code: "A", desc: "A", type:"2"}, {code: "B", desc: "B", type:"2"},
+                              {code: "C", desc: "C", type:"2"}, {code: "D", desc: "D", type:"2"}, {code: "F", desc: "F", type:"2"}]
 
 // 新增座位
 const handleOk = (e) => {
@@ -158,7 +158,8 @@ const handleQuery = (param) => {
   axios.get("/business/admin/train-seat/query-list", {
     params: {
       page: param.page,
-      size: param.size
+      size: param.size,
+      trainCode: params.value.trainCode
     }
   }).then((response) => {
     loading.value = false
@@ -178,34 +179,6 @@ const handleTableChange = (pagination) => {
   handleQuery({
     page: pagination.current,
     size: pagination.pageSize
-  })
-}
-
-// 点击增加
-const onAdd = () => {
-  trainSeat.value = {};
-  visible.value = true;
-}
-
-// 点击编辑
-const onEdit = (record) => {
-  trainSeat.value = JSON.parse(JSON.stringify(record));
-  visible.value = true
-}
-
-// 删除
-const onDelete = (record) => {
-  axios.delete("/business/admin/train-seat/delete/" + record.id).then((response) => {
-    const data = response.data;
-    if(data.success) {
-      notification.success({description: "删除成功!"});
-      handleQuery({
-        page: pagination.value.current,
-        size: pagination.value.pageSize
-      })
-    } else {
-      notification.error({description: data.message})
-    }
   })
 }
 

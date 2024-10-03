@@ -35,14 +35,8 @@
           <a-select-option v-for="item in TRAIN_CARRIAGE_TYPE_ARRAY" :key="item.key" :value="item.key">{{item.value}}</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="座位数">
-        <a-input v-model:value="trainCarriage.seatCount" />
-      </a-form-item>
       <a-form-item label="排数">
         <a-input v-model:value="trainCarriage.rowCount" />
-      </a-form-item>
-      <a-form-item label="列数">
-        <a-input v-model:value="trainCarriage.columnCount" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -60,9 +54,7 @@ const trainCarriage = ref({
   trainCode: undefined,
   index: undefined,
   seatType: undefined,
-  seatCount: undefined,
   rowCount: undefined,
-  columnCount: undefined,
   createTime: undefined,
   updateTime: undefined
 })
