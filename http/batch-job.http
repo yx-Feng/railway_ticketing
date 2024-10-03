@@ -1,0 +1,51 @@
+
+POST http://localhost:8000/batch/admin/job/add
+Content-Type: application/json
+
+{
+  "name": "com.example.railway.batch.job.TestJob",
+  "jobGroupName": "default",
+  "cronExpression": "*/2 * * * * ?",
+  "desc": "test job"
+}
+
+### 查询
+GET http://localhost:8000/batch/admin/job/query
+
+### 暂停
+POST http://localhost:8000/batch/admin/job/pause
+Content-Type: application/json
+
+{
+  "name": "com.example.railway.batch.job.TestJob",
+  "jobGroupName": "default"
+}
+
+### 重启
+POST http://localhost:8000/batch/admin/job/resume
+Content-Type: application/json
+
+{
+  "name": "com.example.railway.batch.job.TestJob",
+  "jobGroupName": "default"
+}
+
+### 重置
+POST http://localhost:8000/batch/admin/job/reschedule
+Content-Type: application/json
+
+{
+  "name": "com.example.railway.batch.job.TestJob",
+  "jobGroupName": "default",
+  "cronExpression": "*/5 * * * * ?",
+  "desc": "test job"
+}
+
+### 删除
+POST http://localhost:8000/batch/admin/job/delete
+Content-Type: application/json
+
+{
+  "name": "com.example.railway.batch.job.TestJob",
+  "jobGroupName": "default"
+}
