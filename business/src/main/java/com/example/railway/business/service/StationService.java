@@ -1,17 +1,17 @@
 package com.example.railway.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import com.example.railway.business.domain.Train;
-import com.example.railway.business.domain.TrainExample;
-import com.example.railway.business.resp.TrainQueryResp;
 import com.example.railway.business.domain.Station;
 import com.example.railway.business.domain.StationExample;
 import com.example.railway.business.mapper.StationMapper;
 import com.example.railway.business.req.StationQueryReq;
 import com.example.railway.business.req.StationSaveReq;
 import com.example.railway.business.resp.StationQueryResp;
+import com.example.railway.exception.BusinessException;
+import com.example.railway.exception.BusinessExceptionEnum;
 import com.example.railway.resp.PageResp;
 import com.example.railway.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
@@ -36,6 +36,11 @@ public class StationService {
         Station station = BeanUtil.copyProperties(req, Station.class);
         // id为空，表示新增操作，不为空，表示更新操作
         if(ObjectUtil.isNull(station.getId())) {
+            // 保存之前，先校验唯一键是否存在
+            Station stationDB = selectByUnique(req.getName());
+            if (ObjectUtil.isNotNull(stationDB)) {
+                throw new BusinessException(BusinessExceptionEnum.BUSINESS_STATION_NAME_UNIQUE_ERROR);
+            }
             station.setId(SnowUtil.getSnowflakeNextId());
             station.setCreateTime(now);
             station.setUpdateTime(now);
@@ -43,6 +48,18 @@ public class StationService {
         } else {
             station.setUpdateTime(now);
             stationMapper.updateByPrimaryKey(station);
+        }
+    }
+
+    // 按照唯一键查询
+    private Station selectByUnique(String name) {
+        StationExample stationExample = new StationExample();
+        stationExample.createCriteria().andNameEqualTo(name);
+        List<Station> list = stationMapper.selectByExample(stationExample);
+        if(CollUtil.isNotEmpty(list)) {
+            return list.get(0);
+        } else {
+            return null;
         }
     }
 

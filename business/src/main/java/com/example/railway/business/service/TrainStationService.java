@@ -1,14 +1,19 @@
 package com.example.railway.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
+import com.example.railway.business.domain.TrainCarriage;
+import com.example.railway.business.domain.TrainCarriageExample;
 import com.example.railway.business.domain.TrainStation;
 import com.example.railway.business.domain.TrainStationExample;
 import com.example.railway.business.mapper.TrainStationMapper;
 import com.example.railway.business.req.TrainStationQueryReq;
 import com.example.railway.business.req.TrainStationSaveReq;
 import com.example.railway.business.resp.TrainStationQueryResp;
+import com.example.railway.exception.BusinessException;
+import com.example.railway.exception.BusinessExceptionEnum;
 import com.example.railway.resp.PageResp;
 import com.example.railway.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
@@ -33,6 +38,16 @@ public class TrainStationService {
         TrainStation trainStation = BeanUtil.copyProperties(req, TrainStation.class);
         // id为空，表示新增操作，不为空，表示更新操作
         if(ObjectUtil.isNull(trainStation.getId())) {
+            // 保存之前，先校验唯一键是否存在
+            TrainStation trainStationDB = selectByUnique(req.getTrainCode(), req.getIndex());
+            if (ObjectUtil.isNotNull(trainStationDB)) {
+                throw new BusinessException(BusinessExceptionEnum.BUSINESS_TRAIN_STATION_INDEX_UNIQUE_ERROR);
+            }
+            trainStationDB = selectByUnique(req.getTrainCode(), req.getName());
+            if (ObjectUtil.isNotNull(trainStationDB)) {
+                throw new BusinessException(BusinessExceptionEnum.BUSINESS_TRAIN_STATION_NAME_UNIQUE_ERROR);
+            }
+
             trainStation.setId(SnowUtil.getSnowflakeNextId());
             trainStation.setCreateTime(now);
             trainStation.setUpdateTime(now);
@@ -40,6 +55,30 @@ public class TrainStationService {
         } else {
             trainStation.setUpdateTime(now);
             trainStationMapper.updateByPrimaryKey(trainStation);
+        }
+    }
+
+    // 按照唯一键查询trainCode和index
+    private TrainStation selectByUnique(String trainCode , Integer index) {
+        TrainStationExample stationExample = new TrainStationExample();
+        stationExample.createCriteria().andTrainCodeEqualTo(trainCode).andIndexEqualTo(index);
+        List<TrainStation> list = trainStationMapper.selectByExample(stationExample);
+        if(CollUtil.isNotEmpty(list)) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    // 按照唯一键查询trainCode和name
+    private TrainStation selectByUnique(String trainCode , String name) {
+        TrainStationExample stationExample = new TrainStationExample();
+        stationExample.createCriteria().andTrainCodeEqualTo(trainCode).andNameEqualTo(name);
+        List<TrainStation> list = trainStationMapper.selectByExample(stationExample);
+        if(CollUtil.isNotEmpty(list)) {
+            return list.get(0);
+        } else {
+            return null;
         }
     }
 
