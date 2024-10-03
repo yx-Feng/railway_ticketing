@@ -4,7 +4,7 @@ import com.example.railway.business.req.TrainSeatQueryReq;
 import com.example.railway.business.req.TrainSeatSaveReq;
 import com.example.railway.business.resp.TrainSeatQueryResp;
 import com.example.railway.business.service.TrainSeatService;
-import com.example.railway.resp.CommonResq;
+import com.example.railway.resp.CommonResp;
 import com.example.railway.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -18,20 +18,20 @@ public class TrainSeatController {
     private TrainSeatService trainSeatService;
 
     @PostMapping("/save")
-    public CommonResq<Object> save(@Valid @RequestBody TrainSeatSaveReq req) {
+    public CommonResp<Object> save(@Valid @RequestBody TrainSeatSaveReq req) {
         trainSeatService.save(req);
-        return new CommonResq<>();
+        return new CommonResp<>();
     }
 
     @GetMapping("/query-list")
-    public CommonResq<PageResp<TrainSeatQueryResp>> queryList(@Valid TrainSeatQueryReq req) {
+    public CommonResp<PageResp<TrainSeatQueryResp>> queryList(@Valid TrainSeatQueryReq req) {
         PageResp<TrainSeatQueryResp> list = trainSeatService.queryList(req);
-        return new CommonResq<>(list);
+        return new CommonResp<>(list);
     }
 
     @DeleteMapping("/delete/{id}")
-    public CommonResq<Object> delete(@PathVariable Long id) {
+    public CommonResp<Object> delete(@PathVariable Long id) {
         trainSeatService.delete(id);
-        return new CommonResq<>();
+        return new CommonResp<>();
     }
 }

@@ -5,7 +5,7 @@ import com.example.railway.member.req.PassengerQueryReq;
 import com.example.railway.member.req.PassengerSaveReq;
 import com.example.railway.member.resp.PassengerQueryResp;
 import com.example.railway.member.service.PassengerService;
-import com.example.railway.resp.CommonResq;
+import com.example.railway.resp.CommonResp;
 import com.example.railway.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -19,21 +19,21 @@ public class PassengerController {
     private PassengerService passengerService;
 
     @PostMapping("/save")
-    public CommonResq<Object> save(@Valid @RequestBody PassengerSaveReq req) {
+    public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq req) {
         passengerService.save(req);
-        return new CommonResq<>();
+        return new CommonResp<>();
     }
 
     @GetMapping("/query-list")
-    public CommonResq<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
+    public CommonResp<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
         req.setMemberId(LoginMemberContext.getId()); // 直接拿到memberId
         PageResp<PassengerQueryResp> list = passengerService.queryList(req);
-        return new CommonResq<>(list);
+        return new CommonResp<>(list);
     }
 
     @DeleteMapping("/delete/{id}")
-    public CommonResq<Object> delete(@PathVariable Long id) {
+    public CommonResp<Object> delete(@PathVariable Long id) {
         passengerService.delete(id);
-        return new CommonResq<>();
+        return new CommonResp<>();
     }
 }

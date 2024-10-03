@@ -5,7 +5,7 @@ import com.example.railway.${module}.req.${Domain}QueryReq;
 import com.example.railway.${module}.req.${Domain}SaveReq;
 import com.example.railway.${module}.resp.${Domain}QueryResp;
 import com.example.railway.${module}.service.${Domain}Service;
-import com.example.railway.resp.CommonResq;
+import com.example.railway.resp.CommonResp;
 import com.example.railway.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;

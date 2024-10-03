@@ -5,7 +5,7 @@ import com.example.railway.member.req.MemberRegisterReq;
 import com.example.railway.member.req.MemberSendCodeReq;
 import com.example.railway.member.resp.MemberLoginResp;
 import com.example.railway.member.service.MemberService;
-import com.example.railway.resp.CommonResq;
+import com.example.railway.resp.CommonResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -18,31 +18,31 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/count")
-    public CommonResq<Integer> count() {
+    public CommonResp<Integer> count() {
         int count = memberService.count();
-        CommonResq<Integer> commonResq = new CommonResq<Integer>();
-        commonResq.setContent(count);
-        return commonResq;
+        CommonResp<Integer> commonResp = new CommonResp<Integer>();
+        commonResp.setContent(count);
+        return commonResp;
     }
 
     @PostMapping("/register")
-    public CommonResq<Long> register(@Valid MemberRegisterReq req) {
+    public CommonResp<Long> register(@Valid MemberRegisterReq req) {
         long register = memberService.register(req);
-        CommonResq<Long> commonResq = new CommonResq<Long>();
-        commonResq.setContent(register);
-        return commonResq;
+        CommonResp<Long> commonResp = new CommonResp<Long>();
+        commonResp.setContent(register);
+        return commonResp;
     }
 
     @PostMapping("/send-code")
-    public CommonResq<Long> sendCode(@Valid @RequestBody MemberSendCodeReq req) {
+    public CommonResp<Long> sendCode(@Valid @RequestBody MemberSendCodeReq req) {
         memberService.sendCode(req);
-        CommonResq<Long> commonResq = new CommonResq<Long>();
-        return commonResq;
+        CommonResp<Long> commonResp = new CommonResp<Long>();
+        return commonResp;
     }
 
     @PostMapping("/login")
-    public CommonResq<MemberLoginResp> login(@Valid @RequestBody MemberLoginReq req) {
+    public CommonResp<MemberLoginResp> login(@Valid @RequestBody MemberLoginReq req) {
         MemberLoginResp resp = memberService.login(req);
-        return new CommonResq<MemberLoginResp>(resp);
+        return new CommonResp<MemberLoginResp>(resp);
     }
 }

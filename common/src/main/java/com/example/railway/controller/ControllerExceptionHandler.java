@@ -1,7 +1,7 @@
 package com.example.railway.controller;
 
 import com.example.railway.exception.BusinessException;
-import com.example.railway.resp.CommonResq;
+import com.example.railway.resp.CommonResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -17,33 +17,33 @@ public class ControllerExceptionHandler {
     // 系统异常统一处理
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public CommonResq exceptionHandler(Exception e) throws Exception {
-        CommonResq commonResq = new CommonResq();
+    public CommonResp exceptionHandler(Exception e) throws Exception {
+        CommonResp commonResp = new CommonResp();
         LOG.error("系统异常：", e);
-        commonResq.setSuccess(false);
-        commonResq.setMessage("系统出现异常，请联系管理员");
-        return commonResq;
+        commonResp.setSuccess(false);
+        commonResp.setMessage("系统出现异常，请联系管理员");
+        return commonResp;
     }
 
     // 业务异常统一处理
     @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
-    public CommonResq exceptionHandler(BusinessException e) {
-        CommonResq commonResq = new CommonResq();
+    public CommonResp exceptionHandler(BusinessException e) {
+        CommonResp commonResp = new CommonResp();
         LOG.error("业务异常：", e);
-        commonResq.setSuccess(false);
-        commonResq.setMessage(e.getE().getDesc());
-        return commonResq;
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getE().getDesc());
+        return commonResp;
     }
 
     // 校验异常统一处理
     @ExceptionHandler(value = BindException.class)
     @ResponseBody
-    public CommonResq exceptionHandler(BindException e) {
-        CommonResq commonResq = new CommonResq();
+    public CommonResp exceptionHandler(BindException e) {
+        CommonResp commonResp = new CommonResp();
         LOG.error("校验异常：", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-        commonResq.setSuccess(false);
-        commonResq.setMessage(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-        return commonResq;
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        return commonResp;
     }
 }

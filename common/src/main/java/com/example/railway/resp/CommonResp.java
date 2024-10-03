@@ -1,6 +1,6 @@
 package com.example.railway.resp;
 
-public class CommonResq<T> {
+public class CommonResp<T> {
     // 业务上的成功或失败
     private boolean success = true;
 
@@ -10,10 +10,10 @@ public class CommonResq<T> {
     // 返回泛型数据，自定义类型
     private T content;
 
-    public CommonResq() {
+    public CommonResp() {
     }
 
-    public CommonResq(T content) {
+    public CommonResp(T content) {
         this.content = content;
     }
 
