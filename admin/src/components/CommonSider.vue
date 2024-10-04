@@ -28,7 +28,22 @@
           </template>
           <a-menu-item key="/business/daily-train">
             <router-link to="/business/daily-train">
-              <MenuUnfoldOutlined /> &nbsp;每日车次
+              <UserOutlined /> &nbsp;每日车次
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="/business/daily-train-station">
+            <router-link to="/business/daily-train-station">
+              <UserOutlined /> &nbsp;每日车站
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="/business/daily-train-carriage">
+            <router-link to="/business/daily-train-carriage">
+              <UserOutlined /> &nbsp;每日车箱
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="/business/daily-train-seat">
+            <router-link to="/business/daily-train-seat">
+              <UserOutlined /> &nbsp;每日座位
             </router-link>
           </a-menu-item>
         </a-sub-menu>

@@ -9,7 +9,7 @@ create table `station`(
     unique key `name_unique`(`name`)
 ) comment='车站';
 
-create tabLe train (
+create table train (
     `id` bigint not null comment 'id',
     `code` varchar(20) not null comment '车次编号',
     `type` char(1) not null comment '车次类型|枚举[TrainTypeEnum]',
@@ -87,3 +87,54 @@ create table daily_train (
     primary key(id),
     unique key `date_code_unique`(`date`,`code`)
 ) comment='每日车次';
+
+drop table if exists daily_train_station;
+create table daily_train_station (
+   `id` bigint not null comment 'id',
+   `date` date not null comment '日期',
+   `train_code` varchar(20) not null comment '车次编号',
+   `index` int not null comment '站序',
+   `name` varchar(20) not null comment '站名',
+   `name_pinyin` varchar(50) not null comment '站名拼音',
+   `in_time` time comment '进站时间',
+   `out_time` time comment '出站时间',
+   `stop_time` time comment '停站时长',
+   `km` decimal(8,2) not null comment '里程(公里)|从上一站到本站的距离',
+   `create_time` datetime(3) comment '新增时间',
+   `update_time` datetime(3) comment '修改时间',
+   primary key(`id`),
+   unique key `train_code_index_unique`(`date`,`train_code`,`index`),
+   unique key `train_code_name_unique`(`date`,`train_code`,`name`)
+) comment ='每日车站';
+
+drop table if exists daily_train_carriage;
+create table daily_train_carriage (
+    `id` bigint not null comment 'id',
+    `date` date not null comment '日期',
+    `train_code` varchar(20) not null comment '车次编号',
+    `index` int not null comment '箱号',
+    `seat_type` char(1) not null comment '座位类型|枚举[SeatTypeEnum]',
+    `seat_count` int not null comment '座位数',
+    `row_count` int not null comment '排数',
+    `column_count` int not null comment '列数',
+    `create_time` datetime(3) comment '新增时间',
+    `update_time` datetime(3) comment'修改时间',
+    unique key `train_code_index_unique` (`date`,`train_code`,`index`),
+    primary key(`id`)
+) comment='每日车箱';
+
+drop table if exists daily_train_seat;
+create table daily_train_seat (
+    `id` bigint not null comment 'id',
+    `date` date not null comment '日期',
+    `train_code` varchar(20) not null comment '车次编号',
+    `carriage_index` int not null comment '箱序',
+    `row` char(2) not null comment '排号|01，02',
+    `col` char(1) not null comment '列号|枚举[SeatColEnum]',
+    `seat_type` char(1) not null comment '座位类型|枚举[SeatTypeEnum]',
+    `carriage_seat_index` int not null comment '同车箱座序',
+    `sell` varchar(50) not null comment '售卖情况|将经过的车站用01拼接，0表示可买，1表示已卖',
+    `create_time` datetime(3) comment '新增时间',
+    `update_time` datetime(3) comment '修改时间',
+    primary key(`id`)
+) comment='每日座位';

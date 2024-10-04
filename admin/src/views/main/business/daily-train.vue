@@ -1,7 +1,7 @@
 <template>
   <p>
     <a-space>
-      <a-date-picker v-model="params.date" value-format="YYYY-MM-DD" placeholder="请输入日期"></a-date-picker>
+      <a-date-picker v-model:value="params.date" value-format="YYYY-MM-DD" placeholder="请输入日期"></a-date-picker>
       <train-select v-model="params.code" width="200px"></train-select>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
       <a-button type="primary" @click="onAdd">新增</a-button>
