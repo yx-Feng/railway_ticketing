@@ -42,9 +42,13 @@
            <a-form-item label="表达式">
              <a-input v-model:value="job.cronExpression" />
              <div class="ant-alert ant-alert-success">
-               每5秒执行一次：0/5 * * * * ?
-               <br>
-               每5分钟执行一次：* 0/5 * * * ?
+               <a-alert message="" type="success">
+                 <template #description>
+                     每5秒执行一次：0/5 * * * * ?
+                     <br>
+                     每5分钟执行一次：* 0/5 * * * ?
+                 </template>
+               </a-alert>
              </div>
            </a-form-item>
          </a-form>

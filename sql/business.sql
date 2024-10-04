@@ -18,7 +18,7 @@ create tabLe train (
     `start_time` time not null comment '出发时间',
     `end` varchar(20) not null comment '终点站',
     `end_pinyin` varchar(50) not null comment '终点站拼音',
-    `end time` time not null comment '到站时间',
+    `end_time` time not null comment '到站时间',
     `create_time` datetime(3) comment '新增时间',
     `update_time` datetime(3) comment '修改时间',
     primary key(id),
@@ -69,3 +69,21 @@ create table train_seat (
     `update_time` datetime(3) comment '修改时间',
     primary key(`id`)
 ) comment='座位';
+
+drop table if exists daily_train;
+create table daily_train (
+    `id` bigint not null comment 'id',
+    `date` date not null comment '日期',
+    `code` varchar(20) not null comment '车次编号',
+    `type` char(1) not null comment '车次类型|枚举[TrainTypeEnum]',
+    `start` varchar(20) not null comment '始发站',
+    `start_pinyin` varchar(50) not null comment '始发站拼音',
+    `start_time` time not null comment '出发时间',
+    `end` varchar(20) not null comment '终点站',
+    `end_pinyin` varchar(50) not null comment '终点站拼音',
+    `end_time` time not null comment '到站时间',
+    `create_time` datetime(3) comment '新增时间',
+    `update_time` datetime(3) comment '修改时间',
+    primary key(id),
+    unique key `date_code_unique`(`date`,`code`)
+) comment='每日车次';

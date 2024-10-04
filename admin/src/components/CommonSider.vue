@@ -22,6 +22,16 @@
             </router-link>
           </a-menu-item>
         </a-sub-menu>
+        <a-sub-menu key="business">
+          <template #title>
+            <span><UnorderedListOutlined />&nbsp;业务管理</span>
+          </template>
+          <a-menu-item key="/business/daily-train">
+            <router-link to="/business/daily-train">
+              <MenuUnfoldOutlined /> &nbsp;每日车次
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
         <a-sub-menu key="base">
           <template #title>
             <span><UnorderedListOutlined />&nbsp;基础数据</span>
@@ -61,7 +71,7 @@
 import {ref, watch} from "vue";
 import router from "@/router/index.js";
 
-const openKeys = ref(['batch', 'base']);
+const openKeys = ref(['batch', 'base', 'business']);
 const selectedKeys = ref([]);
 
 watch(() => router.currentRoute.value.path, (newValue) => {

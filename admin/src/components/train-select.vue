@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model:value="trainCode" show-search :filter-option="filterTrainCodeOption" @change="onchange" placeholder="请选择车次" :style="'width:'+locaWidth">
+  <a-select v-model:value="trainCode" show-search :filter-option="filterTrainCodeOption" @change="onChange" placeholder="请选择车次" :style="'width:'+locaWidth">
     <a-select-option v-for="item in trains" :key="item.code" :value="item.code" :label="item.code+item.start+item.end">
       {{item.code}} | {{item.start}} ~ {{item.end}}
     </a-select-option>
@@ -46,7 +46,7 @@ const filterTrainCodeOption = (input, option) => {
 
 // 将当前组件的值相应给父组件
 const emit = defineEmits(["update:modelValue", "change"])
-const onchange = (value) => {
+const onChange = (value) => {
   emit("update:modelValue", value)
   // 功能扩展，将子组件的时间暴露给父组件使用
   let train = trains.value.filter(item => item.code == value)[0];

@@ -43,7 +43,7 @@ public class CommonResp<T> {
 
     @Override
     public String toString() {
-        return "CommonResq{" +
+        return "CommonResp{" +
                 "success=" + success +
                 ", message='" + message + '\'' +
                 ", content=" + content +
