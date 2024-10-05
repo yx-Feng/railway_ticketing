@@ -1,12 +1,12 @@
-package com.example.railway.${module}.req;
+package com.example.railway.business.req;
 
 import com.example.railway.common.req.PageReq;
 
-public class ${Domain}QueryReq extends PageReq {
+public class DailyTrainTicketQueryReq extends PageReq {
 
     @Override
     public String toString() {
-        return "${Domain}QueryReq{" +
+        return "DailyTrainTicketQueryReq{" +
                 "} " + super.toString();
     }
 }

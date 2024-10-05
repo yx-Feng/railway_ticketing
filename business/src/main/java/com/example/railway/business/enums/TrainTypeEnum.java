@@ -20,6 +20,22 @@ public enum TrainTypeEnum {
         this.priceRate = priceRate;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public BigDecimal getPriceRate() {
+        return priceRate;
+    }
+
+    public void setPriceRate(BigDecimal priceRate) {
+        this.priceRate = priceRate;
+    }
+
     public String getCode() {
         return code;
     }
