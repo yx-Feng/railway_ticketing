@@ -98,6 +98,7 @@ public class TrainCarriageService {
         trainCarriageMapper.deleteByPrimaryKey(id);
     }
 
+    // 根据车次信息查看所有车厢
     public List<TrainCarriage> selectByTrainCode(String trainCode) {
         TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
         trainCarriageExample.setOrderByClause("`index` asc");
