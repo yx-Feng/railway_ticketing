@@ -81,7 +81,7 @@ const dailyTrainStations = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 4
+  pageSize: 8
 })
 const loading = ref(false)
 const params = ref({
@@ -198,10 +198,11 @@ const handleQuery = (param) => {
   })
 }
 
-const handleTableChange = (pagination) => {
+const handleTableChange = (page) => {
+  pagination.value.pageSize = page.pageSize;
   handleQuery({
-    page: pagination.current,
-    size: pagination.pageSize
+    page: page.current,
+    size: page.pageSize
   })
 }
 

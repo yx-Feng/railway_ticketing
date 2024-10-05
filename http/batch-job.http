@@ -17,7 +17,7 @@ POST http://localhost:8000/batch/admin/job/pause
 Content-Type: application/json
 
 {
-  "name": "com.example.railway.batch.job.TestJob",
+  "name": "com.example.railway.batch.job.DailyTrainJob",
   "jobGroupName": "default"
 }
 
@@ -56,6 +56,5 @@ Content-Type: application/json
 
 {
   "name": "com.example.railway.batch.job.DailyTrainJob",
-  "jobGroupName": "default",
-  "cronExpression": "*/10 * * * * ?"
+  "jobGroupName": "default"
 }

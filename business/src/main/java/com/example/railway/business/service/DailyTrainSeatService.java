@@ -55,7 +55,7 @@ public class DailyTrainSeatService {
     // 查询乘车人列表
     public PageResp<DailyTrainSeatQueryResp> queryList(DailyTrainSeatQueryReq req) {
         DailyTrainSeatExample dailyTrainSeatExample = new DailyTrainSeatExample();
-        dailyTrainSeatExample.setOrderByClause("train_code asc, carriage_index asc");
+        dailyTrainSeatExample.setOrderByClause("date desc, train_code asc, carriage_index asc");
         DailyTrainSeatExample.Criteria criteria = dailyTrainSeatExample.createCriteria();
         if (ObjectUtil.isNotEmpty(req.getTrainCode())){
             criteria.andTrainCodeEqualTo(req.getTrainCode());
