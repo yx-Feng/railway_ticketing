@@ -5,7 +5,7 @@ import com.example.railway.member.req.MemberRegisterReq;
 import com.example.railway.member.req.MemberSendCodeReq;
 import com.example.railway.member.resp.MemberLoginResp;
 import com.example.railway.member.service.MemberService;
-import com.example.railway.resp.CommonResp;
+import com.example.railway.common.resp.CommonResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

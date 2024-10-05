@@ -1,10 +1,8 @@
 package com.example.railway.batch.job;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.example.railway.batch.feign.BusinessFeign;
-import com.example.railway.resp.CommonResp;
+import com.example.railway.common.resp.CommonResp;
 import jakarta.annotation.Resource;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;

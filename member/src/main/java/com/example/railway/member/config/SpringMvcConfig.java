@@ -1,6 +1,6 @@
 package com.example.railway.member.config;
 
-import com.example.railway.interceptor.MemberInterceptor;
+import com.example.railway.common.interceptor.MemberInterceptor;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

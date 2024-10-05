@@ -1,7 +1,6 @@
 package com.example.railway.business.req;
 
-import com.example.railway.req.PageReq;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.railway.common.req.PageReq;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

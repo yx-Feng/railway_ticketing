@@ -1,6 +1,6 @@
 package com.example.railway.member.req;
 
-import com.example.railway.req.PageReq;
+import com.example.railway.common.req.PageReq;
 
 public class PassengerQueryReq extends PageReq {
 

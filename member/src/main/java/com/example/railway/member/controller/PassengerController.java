@@ -1,12 +1,12 @@
 package com.example.railway.member.controller;
 
-import com.example.railway.context.LoginMemberContext;
+import com.example.railway.common.context.LoginMemberContext;
 import com.example.railway.member.req.PassengerQueryReq;
 import com.example.railway.member.req.PassengerSaveReq;
 import com.example.railway.member.resp.PassengerQueryResp;
 import com.example.railway.member.service.PassengerService;
-import com.example.railway.resp.CommonResp;
-import com.example.railway.resp.PageResp;
+import com.example.railway.common.resp.CommonResp;
+import com.example.railway.common.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

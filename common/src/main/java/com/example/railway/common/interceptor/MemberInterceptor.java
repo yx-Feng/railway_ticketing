@@ -1,11 +1,11 @@
-package com.example.railway.interceptor;
+package com.example.railway.common.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.example.railway.context.LoginMemberContext;
-import com.example.railway.resp.MemberLoginResp;
-import com.example.railway.util.JwtUtil;
+import com.example.railway.common.util.JwtUtil;
+import com.example.railway.common.context.LoginMemberContext;
+import com.example.railway.common.resp.MemberLoginResp;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;

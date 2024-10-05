@@ -1,4 +1,4 @@
-package com.example.railway.exception;
+package com.example.railway.common.exception;
 
 public enum BusinessExceptionEnum {
     MEMEBER_MOBILE_EXIST("手机号已注册"),

@@ -12,7 +12,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.railway.resp.CommonResp;
+import com.example.railway.common.resp.CommonResp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

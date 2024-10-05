@@ -1,6 +1,6 @@
 package com.example.railway.batch.feign;
 
-import com.example.railway.resp.CommonResp;
+import com.example.railway.common.resp.CommonResp;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;

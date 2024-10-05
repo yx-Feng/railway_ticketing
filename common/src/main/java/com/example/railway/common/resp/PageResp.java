@@ -1,4 +1,4 @@
-package com.example.railway.resp;
+package com.example.railway.common.resp;
 
 import java.io.Serializable;
 import java.util.List;

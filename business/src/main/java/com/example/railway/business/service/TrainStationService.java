@@ -4,18 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import com.example.railway.business.domain.TrainCarriage;
-import com.example.railway.business.domain.TrainCarriageExample;
 import com.example.railway.business.domain.TrainStation;
 import com.example.railway.business.domain.TrainStationExample;
 import com.example.railway.business.mapper.TrainStationMapper;
 import com.example.railway.business.req.TrainStationQueryReq;
 import com.example.railway.business.req.TrainStationSaveReq;
 import com.example.railway.business.resp.TrainStationQueryResp;
-import com.example.railway.exception.BusinessException;
-import com.example.railway.exception.BusinessExceptionEnum;
-import com.example.railway.resp.PageResp;
-import com.example.railway.util.SnowUtil;
+import com.example.railway.common.exception.BusinessException;
+import com.example.railway.common.exception.BusinessExceptionEnum;
+import com.example.railway.common.resp.PageResp;
+import com.example.railway.common.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
@@ -108,5 +106,13 @@ public class TrainStationService {
 
     public void delete(Long id) {
         trainStationMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<TrainStation> selectByTrainCode(String trainCode) {
+        TrainStationExample trainStationExample = new TrainStationExample();
+        trainStationExample.setOrderByClause("train_code asc, `index` asc");
+        trainStationExample.createCriteria().andTrainCodeEqualTo(trainCode);
+        List<TrainStation> list = trainStationMapper.selectByExample(trainStationExample);
+        return list;
     }
 }

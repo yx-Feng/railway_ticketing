@@ -1,4 +1,4 @@
-package com.example.railway.exception;
+package com.example.railway.common.exception;
 
 public class BusinessException extends RuntimeException{
 

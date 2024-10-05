@@ -1,6 +1,6 @@
-package com.example.railway.context;
+package com.example.railway.common.context;
 
-import com.example.railway.resp.MemberLoginResp;
+import com.example.railway.common.resp.MemberLoginResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

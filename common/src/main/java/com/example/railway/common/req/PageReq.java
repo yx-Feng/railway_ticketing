@@ -1,4 +1,4 @@
-package com.example.railway.req;
+package com.example.railway.common.req;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;

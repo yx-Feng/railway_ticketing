@@ -1,12 +1,11 @@
 package com.example.railway.business.controller.admin;
 
-import com.example.railway.context.LoginMemberContext;
 import com.example.railway.business.req.DailyTrainStationQueryReq;
 import com.example.railway.business.req.DailyTrainStationSaveReq;
 import com.example.railway.business.resp.DailyTrainStationQueryResp;
 import com.example.railway.business.service.DailyTrainStationService;
-import com.example.railway.resp.CommonResp;
-import com.example.railway.resp.PageResp;
+import com.example.railway.common.resp.CommonResp;
+import com.example.railway.common.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

@@ -56,5 +56,6 @@ Content-Type: application/json
 
 {
   "name": "com.example.railway.batch.job.DailyTrainJob",
-  "jobGroupName": "default"
+  "jobGroupName": "default",
+  "cronExpression": "*/10 * * * * ?"
 }

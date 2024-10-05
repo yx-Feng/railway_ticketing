@@ -1,4 +1,4 @@
-package com.example.railway.util;
+package com.example.railway.common.util;
 import cn.hutool.core.util.IdUtil;
 
 // 封装雪花算法

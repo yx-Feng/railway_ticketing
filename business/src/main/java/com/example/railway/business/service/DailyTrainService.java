@@ -3,17 +3,17 @@ package com.example.railway.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.railway.business.domain.Train;
-import com.example.railway.context.LoginMemberContext;
 import com.example.railway.business.domain.DailyTrain;
 import com.example.railway.business.domain.DailyTrainExample;
 import com.example.railway.business.mapper.DailyTrainMapper;
 import com.example.railway.business.req.DailyTrainQueryReq;
 import com.example.railway.business.req.DailyTrainSaveReq;
 import com.example.railway.business.resp.DailyTrainQueryResp;
-import com.example.railway.resp.PageResp;
-import com.example.railway.util.SnowUtil;
+import com.example.railway.common.resp.PageResp;
+import com.example.railway.common.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
@@ -33,6 +33,9 @@ public class DailyTrainService {
 
     @Resource
     private TrainService trainService;
+
+    @Resource
+    DailyTrainStationService dailyTrainStationService;
 
     // 新增乘车人
     public void save(DailyTrainSaveReq req) {
@@ -96,11 +99,12 @@ public class DailyTrainService {
         }
         for (Train train : trainList) {
             genDailyTrain(date, train);
-
+            System.out.println(date);
         }
     }
 
     public void genDailyTrain(Date date, Train train) {
+        LOG.info("生成日期【{}】车次【{}】的信息开始", DateUtil.formatDate(date), train.getCode());
         // 删除该车次已有数据
         DailyTrainExample dailyTrainExample = new DailyTrainExample();
         dailyTrainExample.createCriteria().andDateEqualTo(date).andCodeEqualTo(train.getCode());
@@ -114,5 +118,9 @@ public class DailyTrainService {
         dailyTrain.setUpdateTime(now);
         dailyTrain.setDate(date);
         dailyTrainMapper.insert(dailyTrain);
+
+        // 生成该车次的车站数据
+        dailyTrainStationService.genDaily(date, train.getCode());
+        LOG.info("生成日期【{}】车次【{}】的信息结束", DateUtil.formatDate(date), train.getCode());
     }
 }

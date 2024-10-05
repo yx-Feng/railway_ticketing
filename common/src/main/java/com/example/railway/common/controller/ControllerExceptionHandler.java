@@ -1,7 +1,7 @@
-package com.example.railway.controller;
+package com.example.railway.common.controller;
 
-import com.example.railway.exception.BusinessException;
-import com.example.railway.resp.CommonResp;
+import com.example.railway.common.exception.BusinessException;
+import com.example.railway.common.resp.CommonResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
