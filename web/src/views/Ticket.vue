@@ -62,6 +62,9 @@
           --
         </div>
       </template>
+      <template v-else-if="column.dataIndex === 'operation'">
+        <a-button type="primary" @click="toOrder(record)">预订</a-button>
+      </template>
     </template>
   </a-table>
 </template>
@@ -72,6 +75,7 @@ import axios from "axios";
 import {notification} from "ant-design-vue";
 import StationSelect from "@/components/station-select.vue";
 import dayjs from "dayjs";
+import router from "@/router/index.js";
 
 const visible = ref(false);
 const dailyTrainTicket = ref({
@@ -152,6 +156,11 @@ const columns = [
     title: '硬卧',
     dataIndex: 'yw',
     key: 'yw',
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+    key: 'operation',
   }
 ]
 const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"},
@@ -161,7 +170,7 @@ const TRAIN_SEAT_COL_ARRAY = [{code: "A", desc: "A", type:"1"}, {code: "C", desc
                               {code: "A", desc: "A", type:"2"}, {code: "B", desc: "B", type:"2"},
                               {code: "C", desc: "C", type:"2"}, {code: "D", desc: "D", type:"2"}, {code: "F", desc: "F", type:"2"}]
 
-// 查询座位列表
+// 余票查询
 const handleQuery = (param) => {
   if (!params.value.date) {
     notification.error({description: "请输入日期"})
@@ -181,6 +190,10 @@ const handleQuery = (param) => {
       size: pagination.value.pageSize
     }
   }
+
+  // 保存查询参数
+  SessionStorage.set(SESSION_TICKET_PARAMS, params.value)
+
   loading.value = true
   axios.get("/business/daily-train-ticket/query-list", {
     params: {
@@ -218,10 +231,20 @@ const calDuration = (startTime, endTime) => {
   return dayjs('00:00:00', 'HH:mm:ss').second(diff).format('HH:mm:ss');
 }
 
+// 跳转到预定页面
+const toOrder = (record) => {
+  dailyTrainTicket.value = record
+  SessionStorage.set(SESSION_ORDER, dailyTrainTicket.value)
+  router.push("/order")
+}
+
 onMounted(() => {
-  // handleQuery({
-  //   page: 1,
-  //   size: pagination.value.pageSize
-  // })
+  params.value = SessionStorage.get(SESSION_TICKET_PARAMS) || {}
+  if (params.value) {
+    handleQuery({
+      page: 1,
+      size: pagination.value.pageSize
+    })
+  }
 })
 </script>
