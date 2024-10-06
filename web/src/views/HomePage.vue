@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-layout>
+    <a-layout class="homePage">
       <CommonHeader/>
       <a-layout>
         <CommonSider/>
@@ -25,4 +25,7 @@ import CommonSider from "@/components/CommonSider.vue";
 </script>
 
 <style scoped>
+.homePage {
+  height: 100vh;
+}
 </style>

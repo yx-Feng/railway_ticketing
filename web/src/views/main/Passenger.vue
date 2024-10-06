@@ -16,8 +16,8 @@
         </a-space>
       </template>
       <template v-else-if="column.dataIndex === 'type'">
-        <span v-for="item in PASSENGER_TYPE_ARRAY" :key="item.key">
-          <span v-if="item.key === record.type">{{item.value}}</span>
+        <span v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code">
+          <span v-if="item.code === record.type">{{item.desc}}</span>
         </span>
       </template>
     </template>
@@ -30,9 +30,9 @@
       <a-form-item label="身份证">
         <a-input v-model:value="passenger.idCard" />
       </a-form-item>
-      <a-form-item label="类型">
+      <a-form-item label="旅客类型">
         <a-select v-model:value="passenger.type">
-          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.key" :value="item.key">{{item.value}}</a-select-option>
+          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.desc">{{item.desc}}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -75,7 +75,7 @@ const columns = [
     key: 'idCard',
   },
   {
-    title: '类型',
+    title: '旅客类型',
     dataIndex: 'type',
     key: 'type',
   },
@@ -84,7 +84,7 @@ const columns = [
     dataIndex: 'operation',
   },
 ]
-const PASSENGER_TYPE_ARRAY = [{key: "1", value: "成人"}, {key: "2", value: "儿童"}, {key: "3", value: "学生"}]
+const PASSENGER_TYPE_ARRAY = [{code: "1", desc: "成人"}, {code: "2", desc: "儿童"}, {code: "3", desc: "学生"}]
 
 // 新增乘车人
 const handleOk = (e) => {
