@@ -32,7 +32,7 @@
       </a-form-item>
       <a-form-item label="旅客类型">
         <a-select v-model:value="passenger.type">
-          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.desc">{{item.desc}}</a-select-option>
+          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">{{item.desc}}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -60,7 +60,7 @@ const passengers = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 2
+  pageSize: 8
 })
 const loading = ref(false)
 const columns = [
