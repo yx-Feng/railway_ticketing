@@ -53,7 +53,7 @@
       <a-button type="primary" size="large" @click="finishCheckPassenger">提交订单</a-button>
     </div>
 
-    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消">
+    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消" @ok="handelOk">
       <div class="order-tickets">
         <a-row class="order-tickets-header" v-if="tickets.length > 0">
           <a-col :span="3">乘客</a-col>
@@ -97,6 +97,10 @@
           </div>
           <div style="color: #999999">提示：您可以选择{{tickets.length}}个座位</div>
         </div>
+
+        <br/>
+        最终购票：{{tickets}}
+        最终选座：{{chooseSeatObj}}
       </div>
     </a-modal>
   </div>
@@ -177,6 +181,7 @@ const SEAT_COL_ARRAY_FILTER = computed(() => {
 // }
 const chooseSeatObj = ref({})
 watch(() => SEAT_COL_ARRAY_FILTER.value, () => {
+  chooseSeatObj.value = {}
   for (let i = 1; i <= 2; i++) {
     SEAT_COL_ARRAY_FILTER.value.forEach((item) => {
       chooseSeatObj.value[item.code + i] = false
@@ -252,8 +257,29 @@ const finishCheckPassenger = () => {
   visible.value = true
 }
 
-
-
+const handelOk = () => {
+  // 清空购票列表的座位
+  for(let i = 0; i < tickets.value.length; i++) {
+    tickets.value[i].seat = null;
+  }
+  let i = -1;
+  // 要么不选座位，要么所选座位应该等于购票数，即i ===(tickets.valve.length - 1)
+  for(let key in chooseSeatObj.value) {
+    if(chooseSeatObj.value[key]) {
+      i++;
+      if(i > tickets.value.length - 1){
+        notification.error({description: '所选座位数大于购票数'});
+        return;
+      }
+      tickets.value[i].seat = key;
+    }
+  }
+  if(i > -1 && i < tickets.value.length - 1){
+    notification.error({description:'所选座位数小于购票数'});
+    return;
+  }
+  console.log("最终购票:", tickets.value)
+}
 
 onMounted(() => {
   handleQueryPassenger();
