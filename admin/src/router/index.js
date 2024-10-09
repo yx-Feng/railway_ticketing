@@ -57,7 +57,10 @@ const router = createRouter({
         {
           path: 'daily-train-ticket',
           component: () => import('../views/main/business/daily-train-ticket.vue'),
-        },
+        }, {
+          path: 'confirm-order',
+          component: () => import('../views/main/base/confirm-order.vue'),
+        }
       ]
     },
     {
