@@ -5,21 +5,23 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ConfirmOrderDoReq {
 
     /**
      * 会员id
      */
-    @NotNull(message ="【会员id】不能为空")
     private Long memberId;
 
     /**
      * 日期
      */
-    @NotBlank(message="【日期】不能为空")
-    private String date;
+    @NotNull(message="【日期】不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date date;
 
     /**
      * 车次编号
@@ -48,7 +50,7 @@ public class ConfirmOrderDoReq {
     /**
      * 车票
      */
-    @NotBlank(message="【车票】不能为空")
+    @NotEmpty(message="【车票】不能为空")
     private List<ConfirmOrderTicketReq> tickets;
 
     public Long getMemberId() {
@@ -59,11 +61,11 @@ public class ConfirmOrderDoReq {
         this.memberId = memberId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

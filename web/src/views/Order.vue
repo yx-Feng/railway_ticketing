@@ -280,7 +280,8 @@ const handelOk = () => {
   }
   console.log("最终购票:", tickets.value)
 
-  axios.post("/business/confirm-order/", {
+  // 确认购票订单
+  axios.post("/business/confirm-order/do", {
     dailyTrainTicketId: dailyTrainTicket.id,
     date: dailyTrainTicket.date,
     trainCode: dailyTrainTicket.trainCode,
