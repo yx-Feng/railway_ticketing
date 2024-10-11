@@ -81,7 +81,7 @@ const dailyTrainStations = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 8
+  pageSize: 10
 })
 const loading = ref(false)
 const params = ref({

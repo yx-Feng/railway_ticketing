@@ -6,6 +6,11 @@
   </p>
   <a-table :dataSource="confirmOrders" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
     <template #bodyCell="{column, record}" >
+      <template v-if="column.dataIndex === 'status'">
+        <span v-for="item in CONFIRM_ORDER_STATUS_ARRAY" :key="item.code">
+          <span v-if="item.code === record.status">{{item.desc}}</span>
+        </span>
+      </template>
     </template>
   </a-table>
   <a-modal v-model:open="visible" title="车站" @ok="handleOk" ok-text="确认" cancel-text="取消">
@@ -64,7 +69,7 @@ const confirmOrders = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 8
+  pageSize: 10
 })
 let loading = ref(false)
 const columns = [
@@ -109,11 +114,13 @@ const columns = [
     key: 'status',
   }
 ]
+const CONFIRM_ORDER_STATUS_ARRAY = [{code: "I", desc: "初始"},{code: "P", desc: "处理中"},{code: "S", desc: "成功"},
+  {code: "F", desc: "失败"},{code: "E", desc: "无票"},{code: "C", desc: "取消"}]
 
 // 新增座位
 const handleOk = (e) => {
   console.log(confirmOrder.value)
-  axios.post("/business/admin/confirm-order/save", confirmOrder.value).then((response) => {
+  axios.post("/business/confirm-order/admin/save", confirmOrder.value).then((response) => {
     let data = response.data;
     if(data.success) {
       notification.success({description: "保存成功!"})
@@ -137,7 +144,7 @@ const handleQuery = (param) => {
     }
   }
   loading.value = true
-  axios.get("/business/admin/confirm-order/query-list", {
+  axios.get("/business/confirm-order/admin/query-list", {
     params: {
       page: param.page,
       size: param.size

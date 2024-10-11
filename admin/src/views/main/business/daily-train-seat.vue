@@ -78,7 +78,7 @@ const dailyTrainSeats = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 8
+  pageSize: 10
 })
 let loading = ref(false)
 let params = ref({

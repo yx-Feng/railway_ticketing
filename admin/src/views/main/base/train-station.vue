@@ -75,7 +75,7 @@ const trainStations = ref([])
 const pagination = ref({
   total: 0,
   current: 1,
-  pageSize: 4
+  pageSize: 8
 })
 const loading = ref(false)
 const columns = [

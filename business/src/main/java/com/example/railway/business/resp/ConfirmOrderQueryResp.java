@@ -22,7 +22,8 @@ public class ConfirmOrderQueryResp {
     /**
      * 日期
      */
-    private String date;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date date;
 
     /**
      * 车次编号
@@ -83,11 +84,11 @@ public class ConfirmOrderQueryResp {
         this.memberId = memberId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
