@@ -49,6 +49,9 @@ public class ConfirmOrderService {
     @Resource
     DailyTrainSeatService dailyTrainSeatService;
 
+    @Resource
+    AfterConfirmOrderService afterConfirmOrderService;
+
     // 确认订单
     public void doConfirm(ConfirmOrderDoReq req) {
         // 省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期内，tickets条数>0，同乘客同车次是否已买过
@@ -139,15 +142,9 @@ public class ConfirmOrderService {
         }
 
         LOG.info("最终选座：{}", finalSeatList);
-        // 选座
-            // 一个车厢一个车厢地获取座位数据
-            // 挑选符合条件的座位，如果这个车厢不满足，则进入下个车厢（尽可能多个座位在同一个车厢）
 
         // 选中座位后事务处理
-            // 座位表修改售卖情况sell字段
-            // 余票详情表修改余票
-            // 为会员增加购票记录
-            // 更新确认订单为成功
+        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket, finalSeatList);
     }
 
     /**
@@ -257,10 +254,10 @@ public class ConfirmOrderService {
         //  000, 000
         String sellPart = sell.substring(startIndex, endIndex);
         if (Integer.parseInt(sellPart) > 0) {
-            LOG.info("座位{}在本次车站区间{}~{}已售过票，不可选中该座位", dailyTrainSeat.getCarriageIndex(), startIndex, endIndex);
+            LOG.info("座位{}在本次车站区间{}~{}已售过票，不可选中该座位", dailyTrainSeat.getCarriageSeatIndex(), startIndex, endIndex);
             return false;
         } else {
-            LOG.info("座位{}在本次车站区间{}~{}未售过票，可选中该座位", dailyTrainSeat.getCarriageIndex(), startIndex, endIndex);
+            LOG.info("座位{}在本次车站区间{}~{}未售过票，可选中该座位", dailyTrainSeat.getCarriageSeatIndex(), startIndex, endIndex);
             //  111,  111
             String curSell = sellPart.replace('0','1');
             // 0111, 0111

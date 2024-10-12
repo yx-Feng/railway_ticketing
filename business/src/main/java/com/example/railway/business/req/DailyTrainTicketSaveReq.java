@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class DailyTrainTicketSaveReq {
 
@@ -17,7 +18,8 @@ public class DailyTrainTicketSaveReq {
      * 日期
      */
     @NotBlank(message="【日期】不能为空")
-    private String date;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    private Date date;
 
     /**
      * 车次编号
@@ -143,11 +145,11 @@ public class DailyTrainTicketSaveReq {
         this.id = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
