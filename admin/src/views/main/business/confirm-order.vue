@@ -13,34 +13,6 @@
       </template>
     </template>
   </a-table>
-  <a-modal v-model:open="visible" title="车站" @ok="handleOk" ok-text="确认" cancel-text="取消">
-    <a-form :model="confirmOrder" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
-      <a-form-item label="会员id">
-        <train-select v-model="confirmOrder.memberId"></train-select>
-      </a-form-item>
-      <a-form-item label="日期">
-        <a-time-picker v-model:value="confirmOrder.date" value-format="HH:mm:ss" placeholder="请选择时间"/>
-      </a-form-item>
-      <a-form-item label="车次编号">
-        <train-select v-model="confirmOrder.trainCode"></train-select>
-      </a-form-item>
-      <a-form-item label="出发站">
-        <a-input v-model:value="confirmOrder.start" />
-      </a-form-item>
-      <a-form-item label="到达站">
-        <a-input v-model:value="confirmOrder.end" />
-      </a-form-item>
-      <a-form-item label="余票ID">
-        <train-select v-model="confirmOrder.dailyTrainTicketId"></train-select>
-      </a-form-item>
-      <a-form-item label="车票">
-        <a-input v-model:value="confirmOrder.tickets" />
-      </a-form-item>
-      <a-form-item label="订单状态">
-        <a-input v-model:value="confirmOrder.status" />
-      </a-form-item>
-    </a-form>
-  </a-modal>
 </template>
 
 <script setup>
@@ -104,11 +76,6 @@ const columns = [
     key: 'dailyTrainTicketId',
   },
   {
-    title: '车票',
-    dataIndex: 'tickets',
-    key: 'tickets',
-  },
-  {
     title: '订单状态',
     dataIndex: 'status',
     key: 'status',
@@ -116,24 +83,6 @@ const columns = [
 ]
 const CONFIRM_ORDER_STATUS_ARRAY = [{code: "I", desc: "初始"},{code: "P", desc: "处理中"},{code: "S", desc: "成功"},
   {code: "F", desc: "失败"},{code: "E", desc: "无票"},{code: "C", desc: "取消"}]
-
-// 新增座位
-const handleOk = (e) => {
-  console.log(confirmOrder.value)
-  axios.post("/business/confirm-order/admin/save", confirmOrder.value).then((response) => {
-    let data = response.data;
-    if(data.success) {
-      notification.success({description: "保存成功!"})
-      visible.value = false;
-      handleQuery({
-        page: pagination.value.current,
-        size: pagination.value.pageSize
-      })
-    } else {
-      notification.error({description: data.message})
-    }
-  })
-}
 
 // 查询座位列表
 const handleQuery = (param) => {
