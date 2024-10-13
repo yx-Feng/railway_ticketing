@@ -21,10 +21,13 @@ const router = createRouter({
         component: () => import('../views/main/Passenger.vue'),
       },{
         path: 'ticket',
-        component: () => import('../views/Ticket.vue'),
+        component: () => import('../views/main/Ticket.vue'),
       },{
         path: 'order',
-        component: () => import('../views/Order.vue'),
+        component: () => import('../views/main/Order.vue'),
+      },{
+        path: 'my-ticket',
+        component: () => import('../views/main/myTicket.vue'),
       }]
     },
     {

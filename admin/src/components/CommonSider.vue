@@ -12,6 +12,16 @@
             <UserOutlined /> 关于
           </router-link>
         </a-menu-item>
+        <a-sub-menu key="member">
+          <template #title>
+            <span><UnorderedListOutlined />&nbsp;会员管理</span>
+          </template>
+          <a-menu-item key="/member/ticket">
+            <router-link to="/member/ticket">
+              <FileTextOutlined /> &nbsp;会员车票
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
         <a-sub-menu key="batch">
           <template #title>
             <span><UnorderedListOutlined />&nbsp;跑批管理</span>
@@ -96,7 +106,7 @@
 import {ref, watch} from "vue";
 import router from "@/router/index.js";
 
-const openKeys = ref(['batch', 'base', 'business']);
+const openKeys = ref(['batch', 'base', 'business', 'member']);
 const selectedKeys = ref([]);
 
 watch(() => router.currentRoute.value.path, (newValue) => {
