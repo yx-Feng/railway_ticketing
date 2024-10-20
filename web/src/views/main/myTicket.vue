@@ -6,9 +6,9 @@
   </p>
   <a-table :dataSource="tickets" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
     <template #bodyCell="{column, record}" >
-      <template v-if="column.dataIndex === 'col'">
+      <template v-if="column.dataIndex === 'seatCol'">
         <span v-for="item in TRAIN_SEAT_COL_ARRAY" :key="item.code">
-          <span v-if="item.code === record.col && item.type === record.seatType ">{{item.desc}}</span>
+          <span v-if="item.code === record.seatCol && item.type === record.seatType ">{{item.desc}}</span>
         </span>
       </template>
       <template v-else-if="column.dataIndex === 'seatType'">
@@ -31,14 +31,14 @@ const ticket = ref({
   memberId: undefined,
   passengerId: undefined,
   passengerName: undefined,
-  date: undefined,
+  trainDate: undefined,
   trainCode: undefined,
   carriageIndex: undefined,
-  row: undefined,
-  col: undefined,
-  start: undefined,
+  seatRow: undefined,
+  seatCol: undefined,
+  startStation: undefined,
   startTime: undefined,
-  end: undefined,
+  endStation: undefined,
   endTime: undefined,
   seatType: undefined,
   createTime: undefined,
@@ -61,8 +61,8 @@ const columns = [
   },
   {
     title: '日期',
-    dataIndex: 'date',
-    key: 'date',
+    dataIndex: 'trainDate',
+    key: 'trainDate',
   },
   {
     title: '车次编号',
@@ -76,18 +76,18 @@ const columns = [
   },
   {
     title: '排号',
-    dataIndex: 'row',
-    key: 'row',
+    dataIndex: 'seatRow',
+    key: 'seatRow',
   },
   {
     title: '列号',
-    dataIndex: 'col',
-    key: 'col',
+    dataIndex: 'seatCol',
+    key: 'seatCol',
   },
   {
     title: '出发站',
-    dataIndex: 'start',
-    key: 'start',
+    dataIndex: 'startStation',
+    key: 'startStation',
   },
   {
     title: '出发时间',
@@ -96,8 +96,8 @@ const columns = [
   },
   {
     title: '到达站',
-    dataIndex: 'end',
-    key: 'end',
+    dataIndex: 'endStation',
+    key: 'endStation',
   },
   {
     title: '到站时间',
