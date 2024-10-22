@@ -1,0 +1,18 @@
+POST http://localhost:8000/business/confirm-order/do
+content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3Mjk1MjAyNDgsIm1vYmlsZSI6IjExMTE4ODg4ODg4IiwiaWQiOjE4MzYwNTcxNjM2Mzg5MDI3ODQsImV4cCI6MTcyOTYwNjY0OCwiaWF0IjoxNzI5NTIwMjQ4fQ.7IsjVpGcncMKkIrW4i1hIin7p4ACIrbFoX5KAwAKxtw
+
+{
+  "dailyTrainTicketId": "1844965350144348160",
+  "date": "2024-11-01",
+  "trainCode": "G1",
+  "start": "南京",
+  "end": "上海",
+  "tickets":[{
+    "passengerId":"1843108446161997824",
+    "passengerType":"1",
+    "seatTypeCode":"1",
+    "passengerName":"张三",
+    "passengerIdCard":"11111"
+  }]
+}
