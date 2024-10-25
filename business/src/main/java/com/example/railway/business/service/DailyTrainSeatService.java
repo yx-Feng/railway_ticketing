@@ -117,13 +117,21 @@ public class DailyTrainSeatService {
 
     public int countSeat(Date date, String trainCode, String seatType) {
         DailyTrainSeatExample example = new DailyTrainSeatExample();
-        example.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode).andSeatTypeEqualTo(seatType);
+        DailyTrainSeatExample.Criteria criteria = example.createCriteria();
+        criteria.andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+        if (StrUtil.isNotBlank(seatType)) {
+            criteria.andSeatTypeEqualTo(seatType);
+        }
         long l = dailyTrainSeatMapper.countByExample(example);
         // -1表示不出售的情况，和0区分开来（0表示有票但是售光了）
         if (l == 0L) {
             return -1;
         }
         return (int)l;
+    }
+
+    public int countSeat(Date date, String trainCode) {
+        return countSeat(date, trainCode, null);
     }
 
     public List<DailyTrainSeat> selectByCarriage(Date date, String trainCode, Integer carriageIndex) {

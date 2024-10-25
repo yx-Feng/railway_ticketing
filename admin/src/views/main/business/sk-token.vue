@@ -2,17 +2,13 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
   <a-table :dataSource="skTokens" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
     <template #bodyCell="{column, record}" >
       <template v-if="column.dataIndex === 'operation'">
         <a-space>
-          <a-popconfirm title="删除后不可恢复，确认删除?" @confirm="onDelete(record)" ok-text="确认" cancel-text="取消">
-            <a style="color: red">删除</a>
-          </a-popconfirm>
-          <a @click="onEdit(record)">编辑</a>
+          <a @click="onEdit(record)">修改令牌余量</a>
         </a-space>
       </template>
     </template>
@@ -23,7 +19,7 @@
         <a-date-picker v-model:value="skToken.date" value-format="YYYY-MM-DD" placeholder="请输入日期"/>
       </a-form-item>
       <a-form-item label="车次编号">
-        <a-input v-model:value="skToken.trainCode" />
+        <a-input v-model:value="skToken.trainCode" disabled/>
       </a-form-item>
       <a-form-item label="令牌余量">
         <a-input v-model:value="skToken.count" />
@@ -91,7 +87,7 @@ const columns = [
   },
 ]
 
-// 新增token
+// 修改token
 const handleOk = (e) => {
   console.log(skToken.value)
   axios.post("/business/admin/sk-token/save", skToken.value).then((response) => {
@@ -147,32 +143,10 @@ const handleTableChange = (page) => {
   })
 }
 
-// 点击增加
-const onAdd = () => {
-  skToken.value = {};
-  visible.value = true;
-}
-
 // 点击编辑
 const onEdit = (record) => {
   skToken.value = JSON.parse(JSON.stringify(record));
   visible.value = true
-}
-
-// 删除
-const onDelete = (record) => {
-  axios.delete("/business/admin/daily-train-station/delete/" + record.id).then((response) => {
-    const data = response.data;
-    if(data.success) {
-      notification.success({description: "删除成功!"});
-      handleQuery({
-        page: pagination.value.current,
-        size: pagination.value.pageSize
-      })
-    } else {
-      notification.error({description: data.message})
-    }
-  })
 }
 
 onMounted(() => {
