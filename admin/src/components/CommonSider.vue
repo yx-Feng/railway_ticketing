@@ -38,37 +38,37 @@
           </template>
           <a-menu-item key="/business/sk-token">
             <router-link to="/business/sk-token">
-              <UserOutlined /> &nbsp;令牌余量
+              <MenuUnfoldOutlined /> &nbsp;令牌余量
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/confirm-order">
             <router-link to="/business/confirm-order">
-              <UserOutlined /> &nbsp;订单信息
+              <MenuUnfoldOutlined /> &nbsp;订单信息
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/daily-train-ticket">
             <router-link to="/business/daily-train-ticket">
-              <UserOutlined /> &nbsp;余票信息
+              <MenuUnfoldOutlined /> &nbsp;余票信息
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/daily-train">
             <router-link to="/business/daily-train">
-              <UserOutlined /> &nbsp;每日车次
+              <MenuUnfoldOutlined /> &nbsp;每日车次
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/daily-train-station">
             <router-link to="/business/daily-train-station">
-              <UserOutlined /> &nbsp;每日车站
+              <MenuUnfoldOutlined /> &nbsp;每日车站
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/daily-train-carriage">
             <router-link to="/business/daily-train-carriage">
-              <UserOutlined /> &nbsp;每日车箱
+              <MenuUnfoldOutlined /> &nbsp;每日车箱
             </router-link>
           </a-menu-item>
           <a-menu-item key="/business/daily-train-seat">
             <router-link to="/business/daily-train-seat">
-              <UserOutlined /> &nbsp;每日座位
+              <MenuUnfoldOutlined /> &nbsp;每日座位
             </router-link>
           </a-menu-item>
         </a-sub-menu>
@@ -78,27 +78,27 @@
           </template>
           <a-menu-item key="/base/station">
             <router-link to="/base/station">
-              <UserOutlined /> 车站管理
+              <MenuUnfoldOutlined /> 车站管理
             </router-link>
           </a-menu-item>
           <a-menu-item key="/base/train">
             <router-link to="/base/train">
-              <UserOutlined /> 火车管理
+              <MenuUnfoldOutlined /> 火车管理
             </router-link>
           </a-menu-item>
           <a-menu-item key="/base/train-station">
             <router-link to="/base/train-station">
-              <UserOutlined /> 火车车站管理
+              <MenuUnfoldOutlined /> 火车车站管理
             </router-link>
           </a-menu-item>
           <a-menu-item key="/base/train-carriage">
             <router-link to="/base/train-carriage">
-              <UserOutlined /> 火车车箱管理
+              <MenuUnfoldOutlined /> 火车车箱管理
             </router-link>
           </a-menu-item>
           <a-menu-item key="/base/train-seat">
             <router-link to="/base/train-seat">
-              <UserOutlined /> 火车座位管理
+              <MenuUnfoldOutlined /> 火车座位管理
             </router-link>
           </a-menu-item>
         </a-sub-menu>

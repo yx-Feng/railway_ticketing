@@ -108,6 +108,11 @@ const columns = [
     title: '座位类型',
     dataIndex: 'seatType',
     key: 'seatType',
+  },
+  {
+    title: '出票时间',
+    dataIndex: 'createTime',
+    key: 'createTime',
   }
 ]
 const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"},

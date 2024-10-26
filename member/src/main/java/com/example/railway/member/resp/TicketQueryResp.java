@@ -34,7 +34,7 @@ public class TicketQueryResp {
      * 日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private String trainDate;
+    private Date trainDate;
 
     /**
      * 车次编号
@@ -127,11 +127,11 @@ public class TicketQueryResp {
         this.passengerName = passengerName;
     }
 
-    public String getTrainDate() {
+    public Date getTrainDate() {
         return trainDate;
     }
 
-    public void setTrainDate(String trainDate) {
+    public void setTrainDate(Date trainDate) {
         this.trainDate = trainDate;
     }
 
