@@ -1,7 +1,7 @@
 <template>
   <p>
     <a-space>
-      <a-date-picker v-model:value="params.date" value-format="YYYY-MM-DD" placeholder="请输入日期"></a-date-picker>
+      <a-date-picker v-model:value="params.date" value-format="YYYY-MM-DD" :disabled-date="disableDate" placeholder="请输入日期"></a-date-picker>
       <station-select v-model="params.start" width="200px"></station-select>
       <station-select v-model="params.end" width="200px"></station-select>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
@@ -64,7 +64,7 @@
       </template>
       <template v-else-if="column.dataIndex === 'operation'">
         <a-space>
-          <a-button type="primary" @click="toOrder(record)">预订</a-button>
+          <a-button type="primary" @click="toOrder(record)" :disabled="isExpire(record)">{{isExpire(record) ? "过期":"预订"}}</a-button>
           <a-button type="primary" @click="showStation(record)">途径车站</a-button>
         </a-space>
       </template>
@@ -275,6 +275,20 @@ const showStation = record => {
       notification.error({description: data.message});
     }
   })
+}
+
+// 不能选择今天以前及两周以后的日期
+const disableDate = current => {
+  return current && (current <= dayjs().add(-1, 'day') || current > dayjs().add(14, 'day'));
+}
+
+// 判断是否过期
+const isExpire = (record) => {
+  let startDateTimeString = record.date.replace(/-/g, "/") + " " + record.startTime
+  let startDateTime = new Date(startDateTimeString);
+  let now = new Date();
+
+  return now.valueOf() >= startDateTime.valueOf()
 }
 
 onMounted(() => {
