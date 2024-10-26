@@ -53,7 +53,7 @@
       <a-button type="primary" size="large" @click="finishCheckPassenger">提交订单</a-button>
     </div>
 
-    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消" @ok="handelOk">
+    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消" @ok="showImageCodeModal">
       <div class="order-tickets">
         <a-row class="order-tickets-header" v-if="tickets.length > 0">
           <a-col :span="3">乘客</a-col>
@@ -103,6 +103,19 @@
         最终选座：{{chooseSeatObj}}
       </div>
     </a-modal>
+
+    <!-- 验证码-->
+    <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false" style="top:50px; width: 400px">
+        <p style="text-align: center; font-weight: bold; font-size: 18px;">使用验证码削弱瞬时高峰</p>
+        <p>
+          <a-input v-model:value="imageCode" placeholder="图形验证码">
+            <template #suffix>
+              <img v-show="imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>
+            </template>
+          </a-input>
+        </p>
+      <a-button type="primary" danger block @click="handelOk">输入验证码后开始购票</a-button>
+    </a-modal>
   </div>
 </template>
 
@@ -110,6 +123,7 @@
 import {computed, onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
+import { v4 as uuidv4 } from 'uuid'
 
 const dailyTrainTicket = SessionStorage.get(SESSION_ORDER) || {};
 
@@ -256,7 +270,27 @@ const finishCheckPassenger = () => {
   visible.value = true
 }
 
+// 验证码
+const imageCodeModalVisible = ref()
+const imageCodeToken = ref()
+const imageCodeSrc = ref()
+const imageCode = ref()
+// 加载图形验证码
+const loadImageCode = () => {
+  imageCodeToken.value = uuidv4();
+  imageCodeSrc.value = import.meta.env.VITE_APP_SERVER + '/business/kaptcha/image-code/' + imageCodeToken.value;
+}
+const showImageCodeModal = () => {
+  loadImageCode();
+  imageCodeModalVisible.value = true;
+}
+
 const handelOk = () => {
+  if (!imageCode.value) {
+    notification.error({description: '验证码不能为空！'})
+    return;
+  }
+
   // 清空购票列表的座位
   for(let i = 0; i < tickets.value.length; i++) {
     tickets.value[i].seat = null;
@@ -286,7 +320,9 @@ const handelOk = () => {
     trainCode: dailyTrainTicket.trainCode,
     start: dailyTrainTicket.start,
     end: dailyTrainTicket.end,
-    tickets: tickets.value
+    tickets: tickets.value,
+    imageCodeToken: imageCodeToken.value,
+    imageCode: imageCode.value
   }).then((response) => {
     let data = response.data
     if(data.success) {
