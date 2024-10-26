@@ -163,12 +163,6 @@ const columns = [
     key: 'operation',
   }
 ]
-const TRAIN_CARRIAGE_TYPE_ARRAY = [{key: "1", value: "一等座"}, {key: "2", value: "二等座"},
-                                   {key: "3", value: "软卧"}, {key: "4", value: "硬卧"}]
-const TRAIN_SEAT_COL_ARRAY = [{code: "A", desc: "A", type:"1"}, {code: "C", desc: "C", type:"1"},
-                              {code: "D", desc: "D", type:"1"}, {code: "F", desc: "F", type:"1"},
-                              {code: "A", desc: "A", type:"2"}, {code: "B", desc: "B", type:"2"},
-                              {code: "C", desc: "C", type:"2"}, {code: "D", desc: "D", type:"2"}, {code: "F", desc: "F", type:"2"}]
 
 // 余票查询
 const handleQuery = (param) => {

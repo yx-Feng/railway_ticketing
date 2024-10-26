@@ -110,7 +110,6 @@
 import {computed, onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
-import {iterateReferencesTraceMap} from "eslint-plugin-vue/lib/utils/index.js";
 
 const dailyTrainTicket = SessionStorage.get(SESSION_ORDER) || {};
 

@@ -12,6 +12,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
 import com.example.railway.business.domain.*;
 import com.example.railway.business.enums.ConfirmOrderStatusEnum;
+import com.example.railway.business.enums.RedisKeyPreEnum;
 import com.example.railway.business.enums.SeatColEnum;
 import com.example.railway.business.enums.SeatTypeEnum;
 import com.example.railway.business.mapper.ConfirmOrderMapper;
@@ -69,7 +70,7 @@ public class ConfirmOrderService {
     public void doConfirm(ConfirmOrderDoReq req) {
 
         // 校验令牌余量
-        boolean validSkToken = skTokenService.validSkToken(req.getDate(), req.getTrainCode(), req.getMemberId());
+        boolean validSkToken = skTokenService.validSkToken(req.getDate(), req.getTrainCode(), LoginMemberContext.getId());
         if (validSkToken) {
             LOG.info("令牌校验通过");
         } else {
@@ -77,7 +78,7 @@ public class ConfirmOrderService {
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_SK_TOKEN_FAIL);
         }
 
-        String lockKey = DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
+        String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         RLock lock = null;
 
         try {
