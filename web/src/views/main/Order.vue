@@ -53,7 +53,7 @@
       <a-button type="primary" size="large" @click="finishCheckPassenger">提交订单</a-button>
     </div>
 
-    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消" @ok="showImageCodeModal">
+    <a-modal v-model:open="visible" title="请核对以下信息" class="checkOrder" ok-text="确认" cancel-text="取消" @ok="showFirstImageCodeModal">
       <div class="order-tickets">
         <a-row class="order-tickets-header" v-if="tickets.length > 0">
           <a-col :span="3">乘客</a-col>
@@ -104,7 +104,23 @@
       </div>
     </a-modal>
 
-    <!-- 验证码-->
+    <!-- 第一层验证码-->
+    <a-modal v-model:visible="firstImageCodeModalVisible" :title="null" :footer="null" :closable="false" style="top:50px;width:400px">
+      <p style="text-align: center; font-weight: bold; font-size: 18px">
+        使用纯前端验证码削弱瞬时高峰<br/>
+        减小后端验证码接口的压力
+      </p>
+      <p>
+        <a-input v-model:value="firstImageCodeTarget" placeholder="验证码">
+          <template #suffix>
+            {{firstImageCodeSourceA}} + {{firstImageCodeSourceB}}
+          </template>
+        </a-input>
+      </p>
+      <a-button type="primary" danger block @click="validFirstImageCode">提交验证码</a-button>
+    </a-modal>
+
+    <!-- 第二层验证码-->
     <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false" style="top:50px; width: 400px">
         <p style="text-align: center; font-weight: bold; font-size: 18px;">使用验证码削弱瞬时高峰</p>
         <p>
@@ -331,6 +347,32 @@ const handelOk = () => {
       notification.error({description: data.message})
     }
   })
+}
+
+// 第一层验证码
+const firstImageCodeSourceA = ref()
+const firstImageCodeSourceB = ref()
+const firstImageCodeTarget = ref();
+const firstImageCodeModalVisible = ref()
+// 加载第一层验证码
+const loadFirstImageCode=()=> {
+  firstImageCodeSourceA.value = Math.floor(Math.random() * 10 + 1) + 10;
+  firstImageCodeSourceB.value = Math.floor(Math.random() * 10 + 1) + 20;
+}
+// 显示第一层验证码弹出框
+const showFirstImageCodeModal = () => {
+  loadFirstImageCode();
+  firstImageCodeModalVisible.value =true;
+}
+// 校验第一层验证码
+const validFirstImageCode = () => {
+  if (parseInt(firstImageCodeTarget.value) === parseInt(firstImageCodeSourceA.value + firstImageCodeSourceB.value)){
+    // 第一层验证通过
+    firstImageCodeModalVisible.value=false;
+    showImageCodeModal();
+  } else {
+    notification.error({description:'验证码错误'});
+  }
 }
 
 onMounted(() => {
