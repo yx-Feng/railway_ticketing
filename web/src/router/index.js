@@ -28,6 +28,9 @@ const router = createRouter({
       },{
         path: 'my-ticket',
         component: () => import('../views/main/myTicket.vue'),
+      },{
+        path: 'seat',
+        component: () => import('../views/main/seat.vue'),
       }]
     },
     {

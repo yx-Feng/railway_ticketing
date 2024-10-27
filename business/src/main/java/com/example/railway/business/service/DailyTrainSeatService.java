@@ -10,7 +10,9 @@ import com.example.railway.business.domain.*;
 import com.example.railway.business.mapper.DailyTrainSeatMapper;
 import com.example.railway.business.req.DailyTrainSeatQueryReq;
 import com.example.railway.business.req.DailyTrainSeatSaveReq;
+import com.example.railway.business.req.SeatSellReq;
 import com.example.railway.business.resp.DailyTrainSeatQueryResp;
+import com.example.railway.business.resp.SeatSellResp;
 import com.example.railway.common.resp.PageResp;
 import com.example.railway.common.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -139,5 +142,18 @@ public class DailyTrainSeatService {
         example.setOrderByClause("carriage_seat_index");
         example.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode).andCarriageIndexEqualTo(carriageIndex);
         return dailyTrainSeatMapper.selectByExample(example);
+    }
+
+    /**
+     * 查询某日某车次的所有座位
+     */
+    public List<SeatSellResp> querySeatSell(SeatSellReq req) {
+        Date date = req.getDate();
+        String trainCode = req.getTrainCode();
+        LOG.info("查询日期【{}】车次【{}】的座位销售信息", DateUtil.formatDate(date), trainCode);
+        DailyTrainSeatExample dailyTrainSeatExample = new DailyTrainSeatExample();
+        dailyTrainSeatExample.setOrderByClause("`carriage_index` asc, carriage_seat_index asc");
+        dailyTrainSeatExample.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+        return BeanUtil.copyToList(dailyTrainSeatMapper.selectByExample(dailyTrainSeatExample), SeatSellResp.class);
     }
 }

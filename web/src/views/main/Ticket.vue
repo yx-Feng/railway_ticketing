@@ -66,6 +66,18 @@
         <a-space>
           <a-button type="primary" @click="toOrder(record)" :disabled="isExpire(record)">{{isExpire(record) ? "过期":"预订"}}</a-button>
           <a-button type="primary" @click="showStation(record)">途径车站</a-button>
+          <router-link :to="{
+            path: '/seat',
+            query: {
+              date: record.date,
+              trainCode: record.trainCode,
+              start: record.start,
+              end: record.end,
+              endIndex: record.endIndex
+            }
+          }">
+            <a-button type="primary">座位销售图</a-button>
+          </router-link>
         </a-space>
       </template>
     </template>

@@ -1,2 +1,7 @@
+GET http://localhost:8000/business/seat-sell/query?date=2024-10-31&trainCode=G1
+Accept: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3Mjk5ODk0OTAsIm1vYmlsZSI6IjEyMzQ1Njc5OTU1IiwiaWQiOjE4MzU2NzI0NjU2NDUzNzU0ODgsImV4cCI6MTczMDA3NTg5MCwiaWF0IjoxNzI5OTg5NDkwfQ.gfAbQOlNDOnp9iwq1ZAswmIVf4hx1RsfrNAZOYzyOrM
+
+###
 GET http://localhost:8000/business/admin/train/gen-seat/G1
 Accept: application/json
