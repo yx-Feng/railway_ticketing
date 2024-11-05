@@ -2,14 +2,12 @@ package com.example.railway.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.alibaba.fastjson.JSON;
 import com.example.railway.business.domain.*;
 import com.example.railway.business.enums.ConfirmOrderStatusEnum;
 import com.example.railway.business.enums.RedisKeyPreEnum;
@@ -20,11 +18,9 @@ import com.example.railway.business.req.ConfirmOrderQueryReq;
 import com.example.railway.business.req.ConfirmOrderDoReq;
 import com.example.railway.business.req.ConfirmOrderTicketReq;
 import com.example.railway.business.resp.ConfirmOrderQueryResp;
-import com.example.railway.common.context.LoginMemberContext;
 import com.example.railway.common.exception.BusinessException;
 import com.example.railway.common.exception.BusinessExceptionEnum;
 import com.example.railway.common.resp.PageResp;
-import com.example.railway.common.util.SnowUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
@@ -62,21 +58,9 @@ public class ConfirmOrderService {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Resource
-    SkTokenService skTokenService;
-
     // 确认订单
     @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock")
     public void doConfirm(ConfirmOrderDoReq req) {
-
-        // 校验令牌余量
-        boolean validSkToken = skTokenService.validSkToken(req.getDate(), req.getTrainCode(), LoginMemberContext.getId());
-        if (validSkToken) {
-            LOG.info("令牌校验通过");
-        } else {
-            LOG.info("令牌校验不通过");
-            throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_SK_TOKEN_FAIL);
-        }
 
         String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         RLock lock = null;
@@ -97,28 +81,25 @@ public class ConfirmOrderService {
                 throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
             }
 
-            // 省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期内，tickets条数>0，同乘客同车次是否已买过
             Date date = req.getDate();
             String trainCode = req.getTrainCode();
             String start = req.getStart();
             String end = req.getEnd();
             List<ConfirmOrderTicketReq> tickets = req.getTickets();
-
-            // 保存确认订单表，状态初始
-            DateTime now = DateTime.now();
-            ConfirmOrder confirmOrder = new ConfirmOrder();
-            confirmOrder.setId(SnowUtil.getSnowflakeNextId());
-            confirmOrder.setCreateTime(now);
-            confirmOrder.setUpdateTime(now);
-            confirmOrder.setMemberId(LoginMemberContext.getId());
-            confirmOrder.setDate(date);
-            confirmOrder.setTrainCode(trainCode);
-            confirmOrder.setStart(start);
-            confirmOrder.setEnd(end);
-            confirmOrder.setDailyTrainTicketId(req.getDailyTrainTicketId());
-            confirmOrder.setStatus(ConfirmOrderStatusEnum.INIT.getCode());
-            confirmOrder.setTickets(JSON.toJSONString(req.getTickets()));
-            confirmOrderMapper.insert(confirmOrder);
+            // 从数据库里查出订单
+            ConfirmOrderExample confirmOrderExample = new ConfirmOrderExample();
+            confirmOrderExample.setOrderByClause("id asc");
+            ConfirmOrderExample.Criteria criteria = confirmOrderExample.createCriteria();
+            criteria.andDateEqualTo(req.getDate()).andTrainCodeEqualTo(req.getTrainCode()).andMemberIdEqualTo(req.getMemberId()).andStartEqualTo(ConfirmOrderStatusEnum.INIT.getCode());
+            List<ConfirmOrder> list = confirmOrderMapper.selectByExampleWithBLOBs(confirmOrderExample);
+            ConfirmOrder confirmOrder;
+            if(CollUtil.isEmpty(list)) {
+                LOG.info("找不到原始订单，结束");
+                return;
+            } else {
+                LOG.info("本次处理{}条确认订单", list.size());
+                confirmOrder = list.get(0);
+            }
 
             // 查出余票记录，需要得到真实的库存
             DailyTrainTicket dailyTrainTicket = dailyTrainTicketService.selectByUnique(date, trainCode, start, end);
@@ -205,11 +186,6 @@ public class ConfirmOrderService {
 
     /**
      * 挑座位，如果有选座，则一次性挑完，如果无选座，则一个一个挑
-     * @param date
-     * @param trainCode
-     * @param seatType
-     * @param column
-     * @param offsetList
      */
     private void getSeat(List<DailyTrainSeat> finalSeatList, Date date, String trainCode, String seatType, String column, List<Integer> offsetList, Integer startIndex, Integer endIndex) {
         List<DailyTrainSeat> getSeatList = new ArrayList<>();
@@ -375,7 +351,6 @@ public class ConfirmOrderService {
     public PageResp<ConfirmOrderQueryResp> queryList(ConfirmOrderQueryReq req) {
         ConfirmOrderExample confirmOrderExample = new ConfirmOrderExample();
         confirmOrderExample.setOrderByClause("id desc");
-        ConfirmOrderExample.Criteria criteria = confirmOrderExample.createCriteria();
 
         LOG.info("查询页码：{}", req.getPage());
         LOG.info("每页条数：{}", req.getSize());

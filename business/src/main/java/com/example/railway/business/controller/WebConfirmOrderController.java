@@ -6,12 +6,14 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.example.railway.business.req.ConfirmOrderDoReq;
 import com.example.railway.business.req.ConfirmOrderQueryReq;
 import com.example.railway.business.resp.ConfirmOrderQueryResp;
+import com.example.railway.business.service.BeforeConfirmOrderService;
 import com.example.railway.business.service.ConfirmOrderService;
 import com.example.railway.common.exception.BusinessExceptionEnum;
 import com.example.railway.common.resp.CommonResp;
 import com.example.railway.common.resp.PageResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.*;
 public class WebConfirmOrderController {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebConfirmOrderController.class);
+
+    @Resource
+    private BeforeConfirmOrderService beforeConfirmOrderService;
 
     @Resource
     private ConfirmOrderService confirmOrderService;
@@ -50,7 +55,7 @@ public class WebConfirmOrderController {
             redisTemplate.delete(imageCodeToken);
         }
 
-        confirmOrderService.doConfirm(req);
+        beforeConfirmOrderService.beforeConfirm(req);
         return new CommonResp<>();
     }
 
