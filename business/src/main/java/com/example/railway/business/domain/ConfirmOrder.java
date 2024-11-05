@@ -1,5 +1,6 @@
 package com.example.railway.business.domain;
 
+import javax.json.Json;
 import java.util.Date;
 
 public class ConfirmOrder {

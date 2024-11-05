@@ -25,6 +25,7 @@ import org.redisson.client.codec.StringCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -49,6 +50,9 @@ public class SkTokenService {
 
     @Autowired
     private RedissonClient redissonClient;
+
+    @Value("${spring.profiles.active}")
+    private String env;
 
     // 新增
     public void save(SkTokenSaveReq req) {
@@ -127,14 +131,16 @@ public class SkTokenService {
     public boolean validSkToken(Date date, String trainCode, Long memberId) {
         LOG.info("会员【{}】获取日期【{}】车次【{}】的令牌开始", memberId, DateUtil.formatDate(date), trainCode);
 
-        // 先获取令牌锁，再校验令牌余量，防止机器人抢票，lockKey就是令牌，用来表示【谁能做什么】的一个凭证
-        String lockKey = RedisKeyPreEnum.SK_TOKEN + "-" + DateUtil.formatDate(date) + "-" + trainCode + "-" +memberId;
-        boolean setIfAbsent = redissonClient.getBucket(lockKey).trySet(lockKey, 5, TimeUnit.SECONDS);
-        if (Boolean.TRUE.equals(setIfAbsent)) {
-            LOG.info("恭喜，抢到令牌锁了！lockKey: {}", lockKey);
-        } else {
-            LOG.info("很遗憾，没抢到令牌锁！lockKey: {}", lockKey);
-            return false;
+        if (!env.equals("dev")) {
+            // 先获取令牌锁，再校验令牌余量，防止机器人抢票，lockKey就是令牌，用来表示【谁能做什么】的一个凭证
+            String lockKey = RedisKeyPreEnum.SK_TOKEN + "-" + DateUtil.formatDate(date) + "-" + trainCode + "-" +memberId;
+            boolean setIfAbsent = redissonClient.getBucket(lockKey).trySet(lockKey, 5, TimeUnit.SECONDS);
+            if (Boolean.TRUE.equals(setIfAbsent)) {
+                LOG.info("恭喜，抢到令牌锁了！lockKey: {}", lockKey);
+            } else {
+                LOG.info("很遗憾，没抢到令牌锁！lockKey: {}", lockKey);
+                return false;
+            }
         }
 
         // 令牌约等于库存，令牌没有了，就不再卖票，不需要再进入购票主流程去判断库存，判断令牌比判断库存效率高
