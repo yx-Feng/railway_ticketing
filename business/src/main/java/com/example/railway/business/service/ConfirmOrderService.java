@@ -462,6 +462,18 @@ public class ConfirmOrderService {
         }
     }
 
+    /**
+     * 取消排队
+     */
+    public Integer cancel(Long id) {
+        ConfirmOrderExample confirmOrderExample = new ConfirmOrderExample();
+        ConfirmOrderExample.Criteria criteria = confirmOrderExample.createCriteria();
+        criteria.andIdEqualTo(id).andStatusEqualTo(ConfirmOrderStatusEnum.INIT.getCode());
+        ConfirmOrder confirmOrder = new ConfirmOrder();
+        confirmOrder.setStatus(ConfirmOrderStatusEnum.CANCEL.getCode());
+        return confirmOrderMapper.updateByExampleSelective(confirmOrder, confirmOrderExample);
+    }
+
     public void doConfirmBlock(ConfirmOrderDoReq req, BlockException e) {
         LOG.info("购票请求被限流：{}", req);
         throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_FLOW_EXCEPTION);

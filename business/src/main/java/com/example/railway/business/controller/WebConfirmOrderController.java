@@ -72,6 +72,11 @@ public class WebConfirmOrderController {
         return new CommonResp<>(count);
     }
 
+    @GetMapping("/cancel/{id}")
+    public CommonResp<Integer> cancel(@PathVariable Long id) {
+        Integer count = confirmOrderService.cancel(id);
+        return new CommonResp<>(count);
+    }
 
     public CommonResp<Object> doConfirmBlock(ConfirmOrderDoReq req, BlockException e) {
         LOG.info("购票请求被限流：{}", req);
