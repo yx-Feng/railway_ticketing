@@ -62,9 +62,16 @@ public class WebConfirmOrderController {
             }
         }
 
-        beforeConfirmOrderService.beforeConfirm(req);
-        return new CommonResp<>();
+        Long id = beforeConfirmOrderService.beforeConfirm(req);
+        return new CommonResp<>(String.valueOf(id));
     }
+
+    @GetMapping("/query-line-count/{id}")
+    public CommonResp<Integer> queryLineCount(@PathVariable Long id) {
+        Integer count = confirmOrderService.queryLineCount(id);
+        return new CommonResp<>(count);
+    }
+
 
     public CommonResp<Object> doConfirmBlock(ConfirmOrderDoReq req, BlockException e) {
         LOG.info("购票请求被限流：{}", req);

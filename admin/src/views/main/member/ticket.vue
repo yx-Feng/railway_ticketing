@@ -24,7 +24,6 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
-import TrainSelect from "@/components/train-select.vue";
 
 const visible = ref(false);
 const ticket = ref({
@@ -32,11 +31,11 @@ const ticket = ref({
   memberId: undefined,
   passengerId: undefined,
   passengerName: undefined,
-  date: undefined,
+  trainDate: undefined,
   trainCode: undefined,
   carriageIndex: undefined,
-  row: undefined,
-  col: undefined,
+  seatRow: undefined,
+  seatCol: undefined,
   start: undefined,
   startTime: undefined,
   end: undefined,
@@ -62,8 +61,8 @@ const columns = [
   },
   {
     title: '日期',
-    dataIndex: 'date',
-    key: 'date',
+    dataIndex: 'trainDate',
+    key: 'trainDate',
   },
   {
     title: '车次编号',
@@ -77,13 +76,13 @@ const columns = [
   },
   {
     title: '排号',
-    dataIndex: 'row',
-    key: 'row',
+    dataIndex: 'seatRow',
+    key: 'seatRow',
   },
   {
     title: '列号',
-    dataIndex: 'col',
-    key: 'col',
+    dataIndex: 'seatCol',
+    key: 'seatCol',
   },
   {
     title: '出发站',

@@ -37,7 +37,7 @@ public class BeforeConfirmOrderService {
 
     // 确认订单
     @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock")
-    public void beforeConfirm(ConfirmOrderDoReq req) {
+    public Long beforeConfirm(ConfirmOrderDoReq req) {
 
         req.setMemberId(LoginMemberContext.getId());
 
@@ -80,6 +80,7 @@ public class BeforeConfirmOrderService {
         LOG.info("排队购票，发送mq开始，消息：{}", reqJson);
         rocketMQTemplate.convertAndSend(RocketMQTopicEnum.CONFIRM_ORDER.getCode(), reqJson);
         LOG.info("排队购票，发送mq结束");
+        return confirmOrder.getId();
     }
 
     public void doConfirmBlock(ConfirmOrderDoReq req, BlockException e) {
